@@ -37,7 +37,7 @@ namespace ZenithShared
                     {
                         e.ExtractToFile(Path.Combine(dir, e.FullName), true);
                     }
-                    catch (IOException ex)
+                    catch (IOException)
                     {
                         throw new InstallFailedException("Could not overwrite file " + Path.Combine(dir, e.FullName));
                     }
