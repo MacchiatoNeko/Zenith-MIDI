@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ZenithEngine.Modules;
 using ZenithEngine.MIDI;
 using ZenithEngine.MIDI.Disk;
-using System.Collections.ObjectModel;
 
 namespace Zenith
 {
@@ -13,11 +12,7 @@ namespace Zenith
     {
         private MidiFile midifile;
         private string midipath = null;
-        private bool MidiLoaded = false;
-
-        ObservableCollection<IModuleRender> RenderModules { get; } = new ObservableCollection<IModuleRender>();
-
-        long lastBackgroundChangeTime = 0;
+        public bool MidiLoaded;
 
         private readonly string defaultPlugin = "Classic";
 

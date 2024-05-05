@@ -1,8 +1,7 @@
-﻿using SharpDX;
+﻿using SharpDX; // TODO: Dynamic lib GL/VK
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ZenithEngine.MIDI

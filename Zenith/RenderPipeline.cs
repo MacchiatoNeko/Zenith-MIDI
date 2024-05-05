@@ -9,7 +9,6 @@ using ZenithEngine.DXHelper;
 using SharpDX.Direct3D11;
 using ZenithEngine.DXHelper.Presets;
 using System.Threading;
-using DX.WPF;
 
 namespace Zenith
 {
@@ -289,27 +288,11 @@ namespace Zenith
         public Task Start(PreviewBase preview) => Start(preview, new CancellationTokenSource().Token);
         public Task Start(PreviewBase preview, CancellationToken cancel)
         {
-#if DEBUG
-            return Task.Run(() =>
-            {
-                renderTask = new Thread(new ThreadStart(() =>
-                {
-                    try
-                    {
-                        Runner(preview, cancel);
-                    }
-                    catch (OperationCanceledException)
-                    { }
-                }));
-                renderTask.Start();
-                renderTask.Join();
-            });
-#else
+
             return Task.Run(() =>
             {
                 Runner(preview, cancel);
             });
-#endif
         }
 
         void Runner(PreviewBase preview, CancellationToken cancel)
@@ -375,10 +358,9 @@ namespace Zenith
 
                         cancel.ThrowIfCancellationRequested();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         state.Stop();
-                        throw e;
                     }
                 }
 

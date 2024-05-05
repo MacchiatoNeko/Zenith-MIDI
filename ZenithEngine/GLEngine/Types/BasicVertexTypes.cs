@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-using OpenTK.Graphics;
+﻿using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
+using Vector2 = OpenTK.Mathematics.Vector2;
 
 namespace ZenithEngine.GLEngine.Types
 {
@@ -33,7 +28,7 @@ namespace ZenithEngine.GLEngine.Types
     }
 
 
-    [StructLayoutAttribute(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct VertexTextured2d
     {
         public static ShaderProgram GetBasicShader() =>

@@ -1,4 +1,4 @@
-﻿using DX.WPF;
+using DX.WPF;
 using SharpDX.Direct3D11;
 using SharpDX.Windows;
 using System;

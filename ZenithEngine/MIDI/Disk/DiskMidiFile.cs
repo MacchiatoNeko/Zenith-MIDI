@@ -1,10 +1,8 @@
-﻿using OpenTK.Graphics;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -95,11 +93,9 @@ namespace ZenithEngine.MIDI.Disk
 
             MaxBufferMemory = maxBufferMemory ?? 8L * 1024 * 1024 * 1024;
 
-            Console.WriteLine("Loading tracks into memory, biggest tracks first.");
-            Console.WriteLine("Please expect this to start slow, especially on bigger midis.");
+            Console.WriteLine("Loading tracks into memory, biggest tracks first.\nPlease expect this to start slow, especially on bigger midis.");
             LoadAndParseAll(progress, cancel);
-            Console.WriteLine("Loaded!");
-            Console.WriteLine("Note count: " + NoteCount);
+            Console.WriteLine("Loaded! Note count: " + NoteCount);
         }
 
         void AssertText(string text)
