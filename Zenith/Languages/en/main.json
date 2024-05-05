@@ -1,0 +1,153 @@
+﻿{
+  "main": {
+    "tabs": {
+      "general": "General",
+      "moduleSettings": "Module Settings",
+      "render": "Render"
+    },
+    "noteSizes": {
+      "tick": "Tick Based",
+      "time": "Time Based"
+    },
+    "gen": {
+      "renderSettings": "Render Settings",
+      "resPreset": "Preset",
+      "width": "Width",
+      "height": "Height",
+      "ssaa": "Super Sample",
+      "fps": "FPS",
+      "noteSizing": "Note Sizing",
+      "ignoreColorEvents": "Ignore Color Events",
+
+      "preview": "Preview",
+      "realtimePlayback": "Realtime Playback",
+      "vsyncEnabled": "VSync Enabled",
+      "muteAudio": "Mute Audio",
+      "previewSpeed": "Preview Speed",
+      "paused": "Paused"
+    },
+    "render": {
+      "outputFile": "Output File",
+      "transparencyMask": "Transparency Mask",
+      "includeAudio": "Include Audio",
+      "outputFormat": "Output Format",
+      "crf": "CRF",
+      "bitrate": "Bitrate",
+      "startOffset": "Start Offset (seconds)",
+
+      "h264crf": "H264 CRF",
+      "h264bitrate": "H264 Bitrate",
+      "h264nvencBitrate": "H264 NVENC Bitrate",
+      "custom": "Custom",
+      "progress": {
+        "notesRendering": "Notes Rendering:",
+        "fps": "FPS:",
+        "midiTime": "MIDI Time:",
+        "progress": "Progress:",
+        "timeElapsed": "Time Elapsed:"
+      }
+    },
+    "loadMidi": "Load MIDI",
+    "unload": "Unload",
+    "loadKdmapi": "Load KDMAPI",
+    "unloadKdmapi": "Unload KDMAPI",
+    "start": "Start",
+    "stop": "Stop",
+    "cancel": "Cancel",
+    "startRender": "Start Render",
+    "browse": "Browse",
+    "notes": "Notes:",
+    "ppq": "PPQ:",
+  },
+  "errors": {
+
+  },
+  "mods": {
+    "common": {
+      "reload": "Reload",
+      "openFolder": "Open Folder",
+      "randomizeOrder": "Randomize color order",
+      "firstNote": "First Key",
+      "lastNote": "Last Key",
+      "pianoHeight": "Piano Height %",
+      "sameWidthNotes": "Same Width Notes",
+      "noteScreenTime": "Note Screen Time",
+
+      "x": "X",
+      "y": "Y",
+      "z": "Z",
+      "start": "Start",
+      "end": "End",
+      "left": "Left",
+      "right": "Right"
+    },
+    "pfa": {
+      "barColorHex": "Bar Color",
+      "middleCSquare": "Middle C Square"
+    },
+    "textured": {
+      "packs": "Packs",
+      "switches": "Switches",
+      "view": "View",
+      "reloadPack": "Reload Pack",
+      "reloadList": "Reload List",
+    },
+    "miditrail": {
+      "tabs": {
+        "camera": "Camera",
+        "general": "General",
+        "glow": "Glow",
+        "keys": "Keys",
+        "notes": "Notes",
+        "light": "Light"
+      },
+      "camera": {
+        "position": "Position",
+        "rotation": "Rotation",
+        "noteViewDistance": "Note View Distance",
+        "perspective": "Perspective",
+        "useOrthro": "Use Orthrographic",
+        "scalex": "Scale X",
+        "scaley": "Scale Y",
+        "strengthx": "Strength X",
+        "strengthy": "Strength Y",
+        "fov": "FOV"
+      },
+      "general": {
+        "noteScale": "Note Scale"
+      },
+      "glow": {
+        "useGlow": "Use Glow",
+        "size": "Size",
+        "strength": "Strength",
+        "brightness": "Brightness"
+      },
+      "color": {
+        "diffuse": "Diffuse",
+        "specular": "Specular",
+        "emit": "Emit",
+        "water": "Water",
+        "enableWater": "Water Enabled"
+      },
+      "keys": {
+        "pressed": "Pressed Shading",
+        "unpressed": "Unpressed Shading"
+      },
+      "light": {
+        "lightX": "Light X",
+        "lightZ": "Light Z",
+        "lightStrength": "Light Strength"
+      },
+      "notes": {
+        "angle": "Angle",
+        "offset": "Offset",
+        "hit": "Hit Shading",
+        "notHit": "Not Hit Shading",
+        "noteType": "Note Type",
+        "flat": "Flat",
+        "cube": "Cube",
+        "round": "Round"
+      }
+    }
+  }
+}
