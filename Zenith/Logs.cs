@@ -16,7 +16,7 @@ namespace Zenith
         Stream stdout;
 
         bool useStdout;
-        object l = new object();
+        object l = new();
 
         public Logger(string filepath, bool useStdout = false)
         {
@@ -93,7 +93,14 @@ namespace Zenith
 
         public void OpenLogData()
         {
-            Process.Start("cmd.exe", $"/title \"debug logs\" /c SET AV_LOG_FORCE_COLOR=true && type \"{filepath}\" && pause");
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Process.Start("cmd.exe", $"/title \"debug logs\" /c SET AV_LOG_FORCE_COLOR=true && type \"{filepath}\" && pause");
+            } 
+            else
+            {
+                Process.Start("cd", filepath);
+            }
         }
 
         public void WriteLine(string text)

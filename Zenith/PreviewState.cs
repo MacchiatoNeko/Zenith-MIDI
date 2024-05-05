@@ -1,19 +1,9 @@
-using DX.WPF;
 using SharpDX.Direct3D11;
 using SharpDX.Windows;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Threading;
-using ZenithEngine.DXHelper;
-using Application = System.Windows.Application;
 
 namespace Zenith
 {
@@ -83,14 +73,6 @@ namespace Zenith
                 Window.Present(state.VSync);
             });
             Window.Dispose();
-        }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (Window != null && e.KeyCode == Keys.Enter)
-            {
-                Window.Fullscreen = !Window.Fullscreen;
-            }
         }
 
         protected override void StopInternal()

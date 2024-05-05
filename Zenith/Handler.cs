@@ -1,7 +1,7 @@
-﻿using ZenithEngine;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using ZenithEngine;
 using ZenithEngine.Modules;
 using ZenithEngine.MIDI;
 using ZenithEngine.MIDI.Disk;
@@ -10,34 +10,31 @@ namespace Zenith
 {
     public class Handler
     {
+#pragma warning disable CA1859
         private MidiFile midifile;
-        private string midipath = null;
         public bool MidiLoaded;
-
-        private readonly string defaultPlugin = "Classic";
-
+        public string OutputPath;
         ModuleManager ModuleRunner { get; } = new ModuleManager();
-
         public RenderPipeline ActivePipeline;
-
         RenderStatus CurrentRenderStatus { get; set; } = null;
 
         public void LoadMidi(string path)
         {
-            if (midifile != null) UnloadMidi();
-
-            if (!File.Exists(path))
+            if (midifile != null) UnloadMidi(); // Make sure that previous MIDI File is not loaded, unload if it is loaded.
+            if (!File.Exists(path)) // Check if MIDI file exists.
             {
                 Console.WriteLine("Midi file doesn't exist");
                 return;
             }
             try
             {
-                midifile?.Dispose(); // Unload MIDI file if it's already loaded.
+                midifile?.Dispose(); 
                 midifile = null;
+                // ^^^ Dispose MidiFile class and set it as null.
                 GC.Collect();
                 GC.WaitForFullGCComplete();
-                midifile = new DiskMidiFile(midipath); // Load here, without checks NOTE -> Change to path variable after portage.
+                // ^^^ Forces an immediate garbage collection of all generations, reducing memory usage, waits for it to be completed.
+                midifile = new DiskMidiFile(path); // Load here, without checks.
                 MidiLoaded = true; // Set loaded status.
             }
             catch (Exception ex)
@@ -50,9 +47,11 @@ namespace Zenith
         {
             midifile.Dispose();
             midifile = null;
+            // ^^^ Dispose MidiFile class and set it as null.
             GC.Collect();
             GC.WaitForFullGCComplete();
-            MidiLoaded = false;
+            // ^^^ Forces an immediate garbage collection of all generations, reducing memory usage, waits for it to be completed.
+            MidiLoaded = false; // Set loaded status.
         }
 
         public void SetPipelineValues()
@@ -77,7 +76,7 @@ namespace Zenith
 
         public void StartPipeline(bool render)
         {
-            var timeBased = false;
+            var timeBased = DefaultValues.TimeBased; // TODO: Get value from user
             // var startOffset = midifile.StartTicksToSeconds(ModuleRunner.CurrentModule.StartOffset, timeBased) +
             //                (render ? (double)secondsDelay.Value : 0);
             var startOffset = 0;
@@ -87,13 +86,22 @@ namespace Zenith
                 timeBased
             );
 
-            CurrentRenderStatus = new RenderStatus(DefaultValues.Width, DefaultValues.Width, 1);
+            CurrentRenderStatus = new RenderStatus(DefaultValues.Width, DefaultValues.Width, 1); // TODO: Make SSAA settable
 
             if (render)
             {
-                var ffmpegArgs = string.Empty; // TODO: Additional ffmpeg args, pass them later
-                // ffmpegArgs = $"-itsoffset {startOffset.ToString().Replace(",", ".")} -i \"{audioPath.Text}\" -acodec aac {ffmpegArgs}";
-                var args = new OutputSettings(ffmpegArgs, Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"/Video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4", false ? "" : null);
+                var ffmpegArgs = string.Empty; // TODO: Set arg prefix
+                // ffmpegArgs = $"-itsoffset {startOffset.ToString().Replace(",", ".")} -i \"{audioPath.Text}\" -acodec aac {ffmpegArgs}"; <-- add this on the end if audio included
+                string SetOutputPath = null; // TODO: Get path from user
+                if (SetOutputPath == null)
+                {
+                    OutputPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"/Zenith_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+                } 
+                else
+                {
+                    OutputPath = SetOutputPath;
+                }
+                var args = new OutputSettings(ffmpegArgs, OutputPath, false ? "" : null);
                 ActivePipeline = new RenderPipeline(CurrentRenderStatus, playback, ModuleRunner, args);
             }
             else
