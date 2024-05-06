@@ -1,14 +1,8 @@
 ﻿using Microsoft.CSharp.RuntimeBinder;
-using Newtonsoft.Json.Linq;
-using SharpDX.Direct3D11;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using ZenithEngine.DXHelper;
-using ZenithEngine.DXHelper.Presets;
+using ZenithEngine.GLEngine;
 using ZenithEngine.MIDI;
 using ZenithEngine.ModuleUI;
 
@@ -19,7 +13,7 @@ namespace ZenithEngine.Modules
         public ModuleLoadFailedException(string msg) : base(msg) { }
     }
 
-    public class ModuleManager
+    public class ModuleManager : IDisposable
     {
         public IModuleRender CurrentModule { get; private set; } = null;
 
@@ -32,176 +26,123 @@ namespace ZenithEngine.Modules
         event EventHandler<IModuleRender> ModuleDisposed;
         event EventHandler<IModuleRender> ModuleInitialized;
 
-        CompositeRenderSurface fullSizeFrame;
-        CompositeRenderSurface alphaFixFrame;
-        BlendStateKeeper blendState;
-        BlendStateKeeper pureBlendState;
-        TextureSampler sampler;
-
+        RenderSurface fullSizeFrame;
         ShaderProgram downscale;
-        ShaderProgram alphaFix;
         Compositor composite;
+        DisposeGroup disposer;
 
-        Initiator init = new Initiator();
+        bool glRunning = false;
 
-        RasterizerStateKeeper raster;
-
-        DeviceGroup device = null;
-
-        object queueLock = new object();
-
-        public ModuleManager()
-        {
-            blendState = init.Add(new BlendStateKeeper());
-            pureBlendState = init.Add(new BlendStateKeeper(BlendPreset.PreserveColor));
-            raster = init.Add(new RasterizerStateKeeper());
-            composite = init.Add(new Compositor());
-            sampler = init.Add(new TextureSampler(SamplerPresets.Wrap));
-            alphaFix = init.Add(Shaders.AlphaAddFix());
-        }
-
+        public ModuleManager() {}
         public ModuleManager(IModuleRender module) : this()
         {
             UseModule(module);
         }
-
-        public ModuleManager(IModuleRender module, DeviceGroup device, MidiPlayback midi, RenderStatus status) : this(module)
+        public ModuleManager(IModuleRender module, MidiPlayback midi, RenderStatus status) : this(module)
         {
-            StartRender(device, midi, status);
+            StartRender(midi, status);
         }
 
         public void UseModule(IModuleRender module)
         {
-            lock (queueLock)
+            while(initQueue.Count != 0)
             {
-                while (initQueue.Count != 0)
+                var m = initQueue.Dequeue();
+                if(m.Initialized)
                 {
-                    var m = initQueue.Dequeue();
-                    if (m.Initialized)
-                    {
-                        disposeQueue.Enqueue(m);
-                    }
+                    disposeQueue.Enqueue(m);
                 }
-                if (device != null && module != null) initQueue.Enqueue(module);
-                if (CurrentModule != null && CurrentModule.Initialized)
-                    disposeQueue.Enqueue(CurrentModule);
-                CurrentModule = module;
             }
+            if(glRunning) initQueue.Enqueue(module);
+            CurrentModule = module;
         }
 
+        /*
         public JObject SerializeModule()
         {
-            var contianer = CurrentModule?.SettingsControl as ISerializableContainer;
-            if (contianer == null) return new JObject();
+            if (CurrentModule?.SettingsControl is not ISerializableContainer contianer) return new JObject();
             else return contianer.Serialize();
         }
 
         public void ParseModule(JObject data)
         {
-            var contianer = CurrentModule?.SettingsControl as ISerializableContainer;
-            if (contianer == null) return;
+            if (CurrentModule?.SettingsControl is not ISerializableContainer contianer) return;
             else contianer.Parse(data);
         }
+        */
 
-        public void StartRender(DeviceGroup device, MidiPlayback file, RenderStatus status)
+        public void StartRender(MidiPlayback file, RenderStatus status)
         {
-            init.Replace(ref fullSizeFrame, new CompositeRenderSurface(status.RenderWidth, status.RenderHeight));
-            init.Replace(ref alphaFixFrame, new CompositeRenderSurface(status.OutputWidth, status.OutputHeight));
-            init.Replace(ref downscale, Shaders.CompositeSSAA(status.OutputWidth, status.OutputHeight, status.SSAA));
             currentMidi = file;
             currentStatus = status;
-            Init(device);
         }
 
         void ProcessQueues()
         {
-            lock (queueLock)
+            while (disposeQueue.Count != 0)
             {
-                if (disposeQueue.Count != 0)
-                {
-                    currentMidi?.ClearNoteMeta();
-                    while (disposeQueue.Count != 0)
-                    {
-                        var m = disposeQueue.Dequeue();
-                        m.Dispose();
-                        ModuleDisposed?.Invoke(this, m);
-                    }
-                }
-                while (initQueue.Count != 0)
-                {
-                    var m = initQueue.Dequeue();
-                    m.Init(device, currentMidi, currentStatus);
-                    ModuleInitialized?.Invoke(this, m);
-                }
+                var m = disposeQueue.Dequeue();
+                m.Dispose();
+                ModuleDisposed?.Invoke(this, m);
+            }
+            while (initQueue.Count != 0)
+            {
+                var m = initQueue.Dequeue();
+                m.Init(currentMidi, currentStatus);
+                ModuleInitialized?.Invoke(this, m);
             }
         }
 
-        public void RenderFrame(DeviceContext context, IRenderSurface outputSurface)
+        public void RenderFrame(RenderSurface outputSurface)
         {
             if (CurrentModule == null) return;
+            InitGL();
+
+            fullSizeFrame.BindSurface();
+            CurrentModule.RenderFrame(fullSizeFrame);
+
+            composite.Composite(fullSizeFrame, downscale, outputSurface);
+        }
+
+        public void DisposeGL()
+        {
+            glRunning = false;
+            if(disposer != null) disposer.Dispose();
+            if (CurrentModule != null && CurrentModule.Initialized) disposeQueue.Enqueue(CurrentModule);
             ProcessQueues();
-
-            using (fullSizeFrame.UseViewAndClear(context))
-            using (raster.UseOn(context))
-            using (sampler.UseOnPS(context))
-            {
-                using (blendState.UseOn(context))
-                {
-                    CurrentModule.RenderFrame(context, fullSizeFrame);
-                }
-
-                context.ClearRenderTargetView(outputSurface);
-                
-                using (pureBlendState.UseOn(context))
-                {
-                    composite.Composite(context, fullSizeFrame, downscale, alphaFixFrame);
-                    composite.Composite(context, alphaFixFrame, alphaFix, outputSurface);
-                }
-            }
-
-            //fullSizeFrame.BindSurface();
-            //CurrentModule.RenderFrame(fullSizeFrame);
-
-            //composite.Composite(fullSizeFrame, downscale, outputSurface);
         }
 
-        void DisposeRender()
+        public void InitGL()
         {
-            lock (queueLock)
+            if (!glRunning)
             {
-                device = null;
-
-                init.Dispose();
-
-                if (CurrentModule != null && CurrentModule.Initialized) disposeQueue.Enqueue(CurrentModule);
-                ProcessQueues();
+                disposer = new DisposeGroup();
+                fullSizeFrame = disposer.Add(RenderSurface.BasicFrame(currentStatus.RenderWidth, currentStatus.RenderHeight));
+                downscale = disposer.Add(ShaderProgram.Presets.SSAA(currentStatus.OutputWidth, currentStatus.OutputHeight, currentStatus.SSAA));
+                composite = disposer.Add(new Compositor());
             }
-        }
-
-        void Init(DeviceGroup device)
-        {
-            this.device = device;
-
-            init.Init(device);
-            //fullSizeFrame = disposer.Add(RenderSurface.BasicFrame(currentStatus.RenderWidth, currentStatus.RenderHeight));
-            //downscale = disposer.Add(ShaderProgram.Presets.SSAA(currentStatus.OutputWidth, currentStatus.OutputHeight, currentStatus.SSAA));
-            //composite = disposer.Add(new Compositor());
-
+            glRunning = true;
             if (CurrentModule != null && !CurrentModule.Initialized) initQueue.Enqueue(CurrentModule);
             ProcessQueues();
         }
 
-        public void ClearModule()
+        public void ClearModules()
         {
-            DisposeRender();
+            DisposeGL();
             CurrentModule = null;
         }
 
         public void EndRender()
         {
-            DisposeRender();
+            DisposeGL();
             currentMidi = null;
             currentStatus = null;
+        }
+
+        public void Dispose()
+        {
+            EndRender();
+            CurrentModule = null;
         }
 
         public static IModuleRender LoadModule(string path)
@@ -227,7 +168,7 @@ namespace ZenithEngine.Modules
                 }
                 if (!hasClass)
                 {
-                    throw new ModuleLoadFailedException("Could not load " + name + "\nDoesn't have render class");
+                    throw new ModuleLoadFailedException("Could not load " + name + "\nDoesn't have \"Render\" class");
                 }
             }
             catch (RuntimeBinderException)
@@ -238,12 +179,10 @@ namespace ZenithEngine.Modules
             {
                 throw new ModuleLoadFailedException("Could not load " + name + "\nThe Render class was not a compatible with the interface");
             }
-#if !DEBUG
             catch (Exception e)
             {
                 throw new ModuleLoadFailedException("An error occured while binding " + name + "\n" + e.Message);
             }
-#endif
             throw new ModuleLoadFailedException("An error occured while binding " + name);
         }
     }

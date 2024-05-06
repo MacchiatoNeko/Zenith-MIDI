@@ -1,4 +1,5 @@
 ﻿using System;
+using ZenithEngine.MIDI;
 
 namespace ZenithEngine
 {

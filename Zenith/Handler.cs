@@ -114,7 +114,7 @@ namespace Zenith
             Task.Run(thread.Wait);
         }
         
-        public void Stop()
+        public void Stop() // Is this useless?
         {
             if (ActivePipeline != null)
             {

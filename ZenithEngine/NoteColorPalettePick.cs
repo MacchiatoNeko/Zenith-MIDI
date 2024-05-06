@@ -6,29 +6,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
 using ZenithEngine.ModuleUtil;
-using Brushes = System.Windows.Media.Brushes;
 using Color = System.Drawing.Color;
 using Path = System.IO.Path;
 
 namespace ZenithEngine
 {
-    /// <summary>
-    /// Interaction logic for NoteColorPalettePick.xaml
-    /// </summary>
-    public partial class NoteColorPalettePick : UserControl
+    public class NoteColorPalettePick
     {
         string searchPath = "";
         public string SelectedImage { get; private set; } = "";
@@ -41,10 +26,6 @@ namespace ZenithEngine
         int seed = 0;
 
         float defS, defV;
-        public NoteColorPalettePick()
-        {
-            InitializeComponent();
-        }
 
         public void SetPath(string path, float defS = 1, float defV = 1)
         {
@@ -96,7 +77,6 @@ namespace ZenithEngine
             }
             var imagePaths = Directory.GetFiles(searchPath).Where(s => s.EndsWith(".png")).ToArray();
 
-            paletteList.Items.Clear();
             foreach (var i in images) i.Dispose();
             images.Clear();
 
@@ -109,62 +89,14 @@ namespace ZenithEngine
 
             foreach (var i in imagePaths)
             {
-                try
+                using (var fs = new System.IO.FileStream(i, System.IO.FileMode.Open))
                 {
-                    using (var fs = new System.IO.FileStream(i, System.IO.FileMode.Open))
-                    {
-                        Bitmap img = new Bitmap(fs);
-                        if (!(img.Width == 16 || img.Width == 32) || img.Width < 1) continue;
-                        images.Add(img);
-                        var item = new ListBoxItem() { Content = Path.GetFileNameWithoutExtension(i) };
-                        if (img.Width == 32) item.Foreground = Brushes.Blue;
-                        paletteList.Items.Add(item);
-                    }
-                }
-                catch
-                {
-
-                }
-            }
-            ReadPFAConfig();
-            SelectImage(SelectedImage);
-        }
-
-        void ReadPFAConfig()
-        {
-            try
-            {
-                var appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var configPath = Path.Combine(appdata, "Piano From Above/Config.xml");
-                if (File.Exists(configPath))
-                {
-                    var data = File.ReadAllText(configPath);
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(data);
-                    var colors = doc.GetElementsByTagName("Colors").Item(0);
-                    Bitmap img = new Bitmap(16, 1);
-                    for (int i = 0; i < 16; i++)
-                    {
-                        var c = colors.ChildNodes.Item(i);
-                        int r = -1;
-                        int g = -1;
-                        int b = -1;
-                        for (int j = 0; j < 3; j++)
-                        {
-                            var attrib = c.Attributes.Item(j);
-                            if (attrib.Name == "R") r = Convert.ToInt32(attrib.InnerText);
-                            if (attrib.Name == "G") g = Convert.ToInt32(attrib.InnerText);
-                            if (attrib.Name == "B") b = Convert.ToInt32(attrib.InnerText);
-                        }
-                        img.SetPixel(i, 0, Color.FromArgb(r, g, b));
-                    }
+                    Bitmap img = new Bitmap(fs);
+                    if (!(img.Width == 16 || img.Width == 32) || img.Width < 1) continue;
                     images.Add(img);
-                    var item = new ListBoxItem() { Content = "PFA Config Colors" };
-                    paletteList.Items.Add(item);
-
                 }
             }
-            catch { }
+            SelectImage(SelectedImage);
         }
 
         public void SelectImage(string img)
@@ -226,39 +158,6 @@ namespace ZenithEngine
                 cols.Add(trackCols);
             }
             return cols.ToArray();
-        }
-
-        private void ReloadButton_Click(object sender, RoutedEventArgs e)
-        {
-            Reload();
-        }
-
-        private void randomiseOrder_CheckToggled(object sender, RoutedEventArgs e)
-        {
-            randomise = (bool)randomiseOrder.IsChecked;
-            if (randomise) seed++;
-            PaletteChanged?.Invoke();
-        }
-
-        private void openPaletteFolder_Click(object sender, RoutedEventArgs e)
-        {
-            if (!searchPath.Contains(":\\") && !searchPath.Contains(":/"))
-                Process.Start("explorer.exe", System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), searchPath));
-            else
-                Process.Start("explorer.exe", searchPath);
-        }
-
-        private void PaletteList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (paletteList.SelectedItem == null) return;
-            try
-            {
-                SelectedImage = (string)((ListBoxItem)paletteList.SelectedItem).Content;
-                selectedIndex = paletteList.SelectedIndex;
-                PaletteChanged?.Invoke();
-            }
-            catch
-            { }
         }
     }
 }
