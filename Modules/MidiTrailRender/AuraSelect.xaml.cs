@@ -1,24 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Image = System.Drawing.Image;
-using Path = System.IO.Path;
 using Color = System.Drawing.Color;
-using System.Diagnostics;
-using System.Reflection;
+using Path = System.IO.Path;
 
 namespace MIDITrailRender
 {
@@ -152,12 +143,12 @@ namespace MIDITrailRender
                 lastSetTime = DateTime.Now.Ticks;
                 var img = new Bitmap(SelectedImage);
                 for (int i = 0; i < img.Width; i++)
-                for(int j = 0; j < img.Height; j++)
+                    for (int j = 0; j < img.Height; j++)
                     {
                         var col = img.GetPixel(i, j);
                         img.SetPixel(i, j, Color.FromArgb(1, col.A, col.A, col.A));
                     }
-                        imagePreview.Source = BitmapToImageSource(img);
+                imagePreview.Source = BitmapToImageSource(img);
             }
         }
 

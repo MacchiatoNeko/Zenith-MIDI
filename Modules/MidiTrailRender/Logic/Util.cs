@@ -22,8 +22,8 @@ namespace MIDITrailRender.Logic
             {
                 throw new Exception();
             }
-            else 
-            { 
+            else
+            {
                 return reader.ReadToEnd();
             }
         }

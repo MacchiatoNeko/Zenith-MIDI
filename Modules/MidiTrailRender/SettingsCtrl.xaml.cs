@@ -1,19 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MIDITrailRender
 {
@@ -246,13 +236,13 @@ namespace MIDITrailRender
         private void CheckboxChecked(object sender, RoutedEventArgs e)
         {
             if (settings == null) return;
-                if (sender == notesChangeSize) settings.notesChangeSize = (bool)notesChangeSize.IsChecked;
-                if (sender == notesChangeTint) settings.notesChangeTint = (bool)notesChangeTint.IsChecked;
-                if (sender == eatNotes) settings.eatNotes = (bool)eatNotes.IsChecked;
-                if (sender == sameWidthNotes) settings.sameWidthNotes = (bool)sameWidthNotes.IsChecked;
-                if (sender == lightShade) settings.lightShade = (bool)lightShade.IsChecked;
-                if (sender == tiltKeys) settings.tiltKeys = (bool)tiltKeys.IsChecked;
-                if (sender == showKeyboard) settings.showKeyboard = (bool)showKeyboard.IsChecked;
+            if (sender == notesChangeSize) settings.notesChangeSize = (bool)notesChangeSize.IsChecked;
+            if (sender == notesChangeTint) settings.notesChangeTint = (bool)notesChangeTint.IsChecked;
+            if (sender == eatNotes) settings.eatNotes = (bool)eatNotes.IsChecked;
+            if (sender == sameWidthNotes) settings.sameWidthNotes = (bool)sameWidthNotes.IsChecked;
+            if (sender == lightShade) settings.lightShade = (bool)lightShade.IsChecked;
+            if (sender == tiltKeys) settings.tiltKeys = (bool)tiltKeys.IsChecked;
+            if (sender == showKeyboard) settings.showKeyboard = (bool)showKeyboard.IsChecked;
         }
 
         private void NewProfile_Click(object sender, RoutedEventArgs e)

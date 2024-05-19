@@ -1,13 +1,10 @@
-﻿using MIDITrailRender.Models;
+﻿using MidiTrailRender.Logic.Batches;
+using MIDITrailRender.Models;
 using SharpDX;
 using SharpDX.Direct3D11;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZenithEngine.DXHelper;
-using ZenithEngine.MIDI;
 using ZenithEngine.ModuleUtil;
 
 namespace MIDITrailRender.Logic
@@ -33,7 +30,7 @@ namespace MIDITrailRender.Logic
 
         public IEnumerable<RenderObject> GetKeyObjects(BaseModel config, KeyboardState keyboard, KeyboardPhysics physics)
         {
-            for(int i = keyboard.FirstKey; i < keyboard.LastKey; i++)
+            for (int i = keyboard.FirstKey; i < keyboard.LastKey; i++)
             {
                 yield return KeyRenderObject.MakeKey(config, this, keyboard, physics, i);
             }

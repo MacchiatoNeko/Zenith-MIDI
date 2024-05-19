@@ -1,34 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MIDITrailRender.Logic;
+using MIDITrailRender.Views;
+using SharpDX.Direct3D11;
+using System.Windows.Media;
 using ZenithEngine;
-using System.Drawing;
-using System.Windows.Interop;
-using System.Windows;
-using System.IO;
-using System.Windows.Media.Imaging;
-using System.Windows.Controls;
 using ZenithEngine.DXHelper;
 using ZenithEngine.DXHelper.Presets;
-using System.Runtime.InteropServices;
-using ZenithEngine.ModuleUtil;
-using ZenithEngine.Modules;
 using ZenithEngine.MIDI;
+using ZenithEngine.Modules;
 using ZenithEngine.ModuleUI;
-using ObjLoader.Loader.Loaders;
-using System.Reflection;
-using SharpDX;
-using SharpDX.DXGI;
-using SharpDX.Mathematics;
-using System.Windows.Media;
-using SharpDX.Direct3D11;
-using Device = SharpDX.Direct3D11.Device;
-using Matrix = SharpDX.Matrix;
-using MIDITrailRender.Views;
-using MIDITrailRender.Logic;
-using MIDITrailRender.Models;
+using ZenithEngine.ModuleUtil;
 
 namespace MIDITrailRender
 {
@@ -45,7 +25,7 @@ namespace MIDITrailRender
         public override ISerializableContainer SettingsControl => settingsView;
 
         public override double StartOffset => 0;
-        
+
         protected override NoteColorPalettePick PalettePicker => settingsView.Data.General.PalettePicker;
 
         CompositeRenderSurface depthSurface;
@@ -116,7 +96,7 @@ namespace MIDITrailRender
             using (depthSurface.UseViewAndClear(context))
             using (depthStencil.UseOn(context))
             using (rasterizer.UseOn(context))
-            {                
+            {
                 noteRenderer.RenderNotes(context, settings, Midi, camera, keyboard);
                 keyboardPhysics.UpdateFrom(keyboard, Midi.PlayerPositionSeconds);
                 var keys = keyboardHandler.GetKeyObjects(settings, keyboard, keyboardPhysics);
