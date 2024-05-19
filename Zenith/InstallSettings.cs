@@ -8,7 +8,7 @@ namespace Zenith
     class InstallSettings
     {
         public string PreviousVersion = "";
-        public string VersionName = "2.1.3";
+        public string VersionName = "3.0.0";
         public string LanguagesVersion = "";
         public bool AutoUpdate = false;
         public bool Installed = false;
