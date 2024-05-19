@@ -330,7 +330,7 @@ namespace Zenith
 
                 init.Init(device);
 
-                Stopwatch time = new Stopwatch();
+                Stopwatch time = new();
 
                 long frameNum = 0;
 
@@ -389,7 +389,6 @@ namespace Zenith
                 dispose.Dispose();
                 Module.EndRender();
             }
-
             RenderEnded?.Invoke(this, new EventArgs());
         }
 

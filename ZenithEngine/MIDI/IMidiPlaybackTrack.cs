@@ -10,9 +10,7 @@ namespace ZenithEngine.MIDI
         long ParseTimeTicks { get; }
         double ParseTimeSeconds { get; }
         NoteColor[] TrackColors { get; }
-
         MidiPlayback MidiPlayback { get; }
-
         void Step(long time);
     }
 }

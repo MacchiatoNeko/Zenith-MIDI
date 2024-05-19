@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ZenithEngine.MIDI.Audio
 {
-    static partial class KDMAPI
+    public static partial class KDMAPI
     {
         public struct MIDIHDR
         {
@@ -182,7 +182,7 @@ namespace ZenithEngine.MIDI.Audio
             }
             else
             {
-                Console.WriteLine("DLL not found. Please ensure the OmniMIDI DLL is present.");
+                Console.WriteLine("KDMAPI not found. Please ensure the OmniMIDI is installed and registered.");
             }
         }
     }

@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
-using System.IO.Compression;
 using ZenithEngine.Modules;
 using ZenithEngine.MIDI;
 using ZenithEngine.MIDI.Disk;
@@ -230,6 +228,8 @@ namespace Zenith
         public static readonly DependencyProperty CanChangeResolutionProperty =
             DependencyProperty.Register("CanChangeResolution", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
 
+        public static int ScalablePPQ;
+
         void InitBindings()
         {
             new InplaceConverter<RenderPipeline, bool>(
@@ -285,8 +285,10 @@ namespace Zenith
 
         public void LoadMidi(string path)
         {
-            if (midifile != null) UnloadMidi();
-
+            if (midifile != null)
+            {
+                UnloadMidi();
+            }
             if (!File.Exists(path))
             {
                 MessageBox.Show("Midi file doesn't exist");
@@ -294,11 +296,12 @@ namespace Zenith
             }
             try
             {
-                if (midifile != null) midifile.Dispose();
+                midifile?.Dispose();
                 midifile = null;
                 GC.Collect();
                 GC.WaitForFullGCComplete();
                 midifile = new DiskMidiFile(path);
+                ScalablePPQ = midifile.PPQ;
                 MidiLoaded = true;
                 browseMidiButton.Content = Path.GetFileName(path);
             }
@@ -589,13 +592,12 @@ namespace Zenith
 
         public void StartPipeline(bool render)
         {
-            var timeBased = noteSizeStyle.SelectedIndex == 1;
+            bool timeBased = noteSizeStyle.SelectedIndex == 1;
             // var startOffset = midifile.StartTicksToSeconds(ModuleRunner.CurrentModule.StartOffset, timeBased) +
             //                (render ? (double)secondsDelay.Value : 0);
-            var startOffset = 0;
+            int startOffset = 0;
 
-
-            var playback = midifile.GetMidiPlayback(
+            MidiPlayback playback = midifile.GetMidiPlayback(
                 startOffset,
                 timeBased
             );
@@ -618,7 +620,7 @@ namespace Zenith
             }
 
             SetPipelineValues();
-            var thread = ActivePipeline.Start(null);
+            Task thread = ActivePipeline.Start(null);
             Task.Run(() =>
             {
                 thread.Wait();
@@ -669,7 +671,6 @@ namespace Zenith
                     return;
                 }
             }
-
             StartPipeline(true);
         }
 
@@ -809,31 +810,29 @@ namespace Zenith
 
         private void DisableKDMAPI_Click(object sender, RoutedEventArgs e)
         {
-            //if (OmniMIDIDisabled)
-            //{
-            //    disableKDMAPI.Content = Resources["disableKDMAPI"];
-            //    OmniMIDIDisabled = false;
-            //    settings.PreviewAudioEnabled = true;
-            //    try
-            //    {
-            //        Console.WriteLine("Loading KDMAPI...");
-            //        KDMAPI.InitializeKDMAPIStream();
-            //        Console.WriteLine("Loaded!");
-            //    }
-            //    catch { }
-            //}
-            //else
-            //{
-            //    disableKDMAPI.Content = Resources["enableKDMAPI"];
-            //    OmniMIDIDisabled = true;
-            //    settings.PreviewAudioEnabled = false;
-            //    try
-            //    {
-            //        Console.WriteLine("Unloading KDMAPI");
-            //        KDMAPI.TerminateKDMAPIStream();
-            //    }
-            //    catch { }
-            //}
+            if (OmniMIDIDisabled)
+            {
+                disableKDMAPI.Content = Resources["disableKDMAPI"];
+                OmniMIDIDisabled = false;
+                try
+                {
+                    Console.WriteLine("Loading KDMAPI...");
+                    KDMAPI.InitializeKDMAPIStream();
+                    Console.WriteLine("Loaded!");
+                }
+                catch { }
+            }
+            else
+            {
+                disableKDMAPI.Content = Resources["enableKDMAPI"];
+                OmniMIDIDisabled = true;
+                try
+                {
+                    Console.WriteLine("Unloading KDMAPI");
+                    KDMAPI.TerminateKDMAPIStream();
+                }
+                catch { }
+            }
         }
 
         private void NoteSizeStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
