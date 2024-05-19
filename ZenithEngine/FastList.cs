@@ -19,7 +19,7 @@ namespace ZenithEngine
             get
             {
                 if (root.Next != null) return root.Next.item;
-                else return default(T);
+                else return default;
             }
         }
         public class Iterator
@@ -97,20 +97,15 @@ namespace ZenithEngine
             }
 
             public object Current => curr.item;
-
             T IEnumerator<T>.Current => curr.item;
 
-            public void Dispose()
-            {
-
-            }
+            public void Dispose() { }
 
             public bool MoveNext()
             {
                 try
                 {
                     curr = curr.Next;
-
                     return curr != null;
                 }
                 catch { return false; }
@@ -118,7 +113,7 @@ namespace ZenithEngine
 
             public void Reset()
             {
-                this.curr = _ilist.root;
+                curr = _ilist.root;
             }
         }
 
@@ -133,8 +128,9 @@ namespace ZenithEngine
                 last.Next = li;
             }
             else
+            {
                 root.Next = li;
-
+            }
             last = li;
         }
 
@@ -166,14 +162,12 @@ namespace ZenithEngine
         public int Count()
         {
             int cnt = 0;
-
             ListItem li = root.Next;
             while (li != null)
             {
                 cnt++;
                 li = li.Next;
             }
-
             return cnt;
         }
 
