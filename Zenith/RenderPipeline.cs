@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZenithEngine.Modules;
-using ZenithEngine.MIDI;
-using ZenithEngine;
-using ZenithEngine.MIDI.Disk;
-using ZenithEngine.Output;
-using System.Diagnostics;
-using ZenithEngine.MIDI.Audio;
-using System.Windows;
-using ZenithEngine.DXHelper;
-using SharpDX.Windows;
+﻿using DX.WPF;
 using SharpDX.Direct3D11;
-using SharpDX.Direct3D;
-using SharpDX;
-using ZenithEngine.DXHelper.Presets;
+using System;
+using System.Diagnostics;
 using System.Threading;
-using System.IO;
-using DX.WPF;
+using System.Threading.Tasks;
+using ZenithEngine;
+using ZenithEngine.DXHelper;
+using ZenithEngine.DXHelper.Presets;
+using ZenithEngine.MIDI;
+using ZenithEngine.MIDI.Audio;
+using ZenithEngine.Modules;
 
 namespace Zenith
 {

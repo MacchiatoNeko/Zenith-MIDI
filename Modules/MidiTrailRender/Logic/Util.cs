@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using ZenithEngine.DXHelper.Presets;
 
 namespace MIDITrailRender.Logic
@@ -20,16 +16,23 @@ namespace MIDITrailRender.Logic
 
         public static string ReadEmbed(string name)
         {
-            using (var stream = OpenEmbedStream(name))
-            using (var reader = new StreamReader(stream))
+            using var stream = OpenEmbedStream(name);
+            using var reader = new StreamReader(stream);
+            if (reader.ReadToEnd() == null)
+            {
+                throw new Exception();
+            }
+            else 
+            { 
                 return reader.ReadToEnd();
+            }
         }
 
         public static string ReadShader(string name)
         {
             var noise = Shaders.ReadShaderText("noise.fx");
-            var shared = ReadEmbed("MIDITrailRender.Shaders.shared.fx");
-            var shader = ReadEmbed("MIDITrailRender.Shaders." + name);
+            var shared = ReadEmbed("MidiTrailRender.Shaders.shared.fx");
+            var shader = ReadEmbed("MidiTrailRender.Shaders." + name);
             return noise + "\n\n" + shared + "\n\n" + shader;
         }
 

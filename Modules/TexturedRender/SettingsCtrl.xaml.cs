@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media.Imaging;
-using Newtonsoft.Json.Linq;
 using ZenithEngine.IO;
 using ZenithEngine.ModuleUI;
 using ZenithEngine.UI;

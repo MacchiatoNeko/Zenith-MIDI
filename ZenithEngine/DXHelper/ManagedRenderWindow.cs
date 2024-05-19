@@ -1,18 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using SharpDX;
-using SharpDX.D3DCompiler;
-using SharpDX.Direct3D;
+﻿using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using SharpDX.Windows;
-using Buffer = SharpDX.Direct3D11.Buffer;
-using Color = SharpDX.Color;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 using Device = SharpDX.Direct3D11.Device;
-using MapFlags = SharpDX.Direct3D11.MapFlags;
 
 namespace ZenithEngine.DXHelper
 {
@@ -168,12 +161,12 @@ namespace ZenithEngine.DXHelper
             {
                 swapChain.Present(vsync ? 1 : 0, PresentFlags.None);
             }
-            catch (SharpDXException e)
+            catch (SharpDXException)
             {
                 Console.WriteLine(Device.DeviceRemovedReason);
-                throw e;
+                throw;
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 return;
             }

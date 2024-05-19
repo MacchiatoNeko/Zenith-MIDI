@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DX.WPF
+﻿namespace DX.WPF
 {
     public abstract class Scene<R> : IDirect3D
         where R : D3D

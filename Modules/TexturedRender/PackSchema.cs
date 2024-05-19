@@ -1,15 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
-using OpenTK.Input;
-using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ZenithEngine.DXHelper;

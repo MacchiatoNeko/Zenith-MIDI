@@ -1,12 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Effects;
-
-namespace NoteCountRender
+﻿namespace NoteCountRender
 {
     public enum Commas
     {

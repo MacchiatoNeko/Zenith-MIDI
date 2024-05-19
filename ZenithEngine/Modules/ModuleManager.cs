@@ -3,10 +3,7 @@ using Newtonsoft.Json.Linq;
 using SharpDX.Direct3D11;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using ZenithEngine.DXHelper;
 using ZenithEngine.DXHelper.Presets;
 using ZenithEngine.MIDI;
@@ -151,7 +148,7 @@ namespace ZenithEngine.Modules
                 }
 
                 context.ClearRenderTargetView(outputSurface);
-                
+
                 using (pureBlendState.UseOn(context))
                 {
                     composite.Composite(context, fullSizeFrame, downscale, alphaFixFrame);

@@ -1,18 +1,6 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Zenith.Models;
 
 namespace Zenith
@@ -40,7 +28,7 @@ namespace Zenith
         private void browseOutputButton_Click(object sender, RoutedEventArgs e)
         {
             var path = Data.Cache.SaveFileDialog("RenderOutput", "H.264 video (*.mp4)|*.mp4|All types|*.*");
-            if(path != null) Data.OutputOptions.OutputLocation = path;
+            if (path != null) Data.OutputOptions.OutputLocation = path;
         }
 
         private void browseMaskButton_Click(object sender, RoutedEventArgs e)

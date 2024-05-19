@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows;
 using ZenithEngine.UI;
-using Slider = ZenithEngine.UI.Slider;
 
 namespace ZenithEngine.ModuleUI
 {
@@ -66,8 +59,9 @@ namespace ZenithEngine.ModuleUI
             }
         }
 
-        public override double ValueInternal { 
-            get => InnerControl.Value; 
+        public override double ValueInternal
+        {
+            get => InnerControl.Value;
             set => InnerControl.Value = value;
         }
 

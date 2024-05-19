@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SharpDX.Direct3D9;
+using System;
 using System.Runtime.InteropServices;
-using SharpDX.Direct3D9;
 
 namespace DX.WPF
 {

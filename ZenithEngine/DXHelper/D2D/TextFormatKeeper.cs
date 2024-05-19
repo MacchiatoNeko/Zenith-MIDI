@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharpDX.Direct2D1;
-using SharpDX.DirectWrite;
+﻿using SharpDX.DirectWrite;
 
 namespace ZenithEngine.DXHelper.D2D
 {
@@ -54,7 +48,7 @@ namespace ZenithEngine.DXHelper.D2D
 
         protected override void InitInternal()
         {
-            TextFormat = dispose.Add(new TextFormat(Device, FontFamily, FontWeight, FontStyle, FontStretch, FontSize ));
+            TextFormat = dispose.Add(new TextFormat(Device, FontFamily, FontWeight, FontStyle, FontStretch, FontSize));
         }
 
         public TextLayout GetLayout(string text, float maxWidth, float minWidth)

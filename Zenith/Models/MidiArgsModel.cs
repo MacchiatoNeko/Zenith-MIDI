@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using ZenithEngine.MIDI.Disk;
 
 namespace Zenith.Models
@@ -48,7 +45,7 @@ namespace Zenith.Models
                         LoadStatus = MidiLoadStatus.Unloaded;
                         throw e;
                     }
-                }); 
+                });
                 try
                 {
                     await MidiLoadTask.Await();

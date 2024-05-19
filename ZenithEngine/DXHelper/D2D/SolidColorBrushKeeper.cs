@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics;
+﻿using OpenTK.Graphics;
 using SharpDX.Direct2D1;
-using SharpDX.DirectWrite;
 using SharpDX.Mathematics.Interop;
 
 namespace ZenithEngine.DXHelper.D2D

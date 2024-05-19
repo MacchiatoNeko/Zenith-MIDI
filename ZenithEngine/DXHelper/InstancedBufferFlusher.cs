@@ -1,12 +1,6 @@
 ﻿using SharpDX;
-using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MapFlags = SharpDX.Direct3D11.MapFlags;
 
 namespace ZenithEngine.DXHelper

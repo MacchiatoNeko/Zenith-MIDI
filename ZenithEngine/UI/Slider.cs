@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -98,7 +94,7 @@ namespace ZenithEngine.UI
                         (val) => new Thickness(val, 0, 0, 0))
                             .Set(head, MarginProperty);
                     }
-                    if(leftBar != null)
+                    if (leftBar != null)
                     {
                         new InplaceConverter<double, double>(new BBinding(ScaledValueProperty, this),
                         (val) => val)

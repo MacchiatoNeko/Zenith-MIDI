@@ -1,9 +1,4 @@
-﻿using SharpDX;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ZenithEngine.MIDI;
 
 namespace ZenithEngine.ModuleUtil
@@ -15,7 +10,7 @@ namespace ZenithEngine.ModuleUtil
 
         static Extensions()
         {
-            for(int i = 0; i < 256; i++)
+            for (int i = 0; i < 256; i++)
             {
                 blackKeys[i] = KeyboardState.IsBlackKey(i);
                 whiteKeys[i] = !KeyboardState.IsBlackKey(i);

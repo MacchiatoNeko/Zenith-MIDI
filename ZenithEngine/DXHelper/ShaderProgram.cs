@@ -182,7 +182,7 @@ namespace ZenithEngine.DXHelper
             VertexShader = dispose.Add(new VertexShader(Device, VertexShaderByteCode));
             PixelShaderByteCode = dispose.Add(ShaderBytecode.Compile(code, fragEntry, "ps_" + version, ShaderFlags.None, EffectFlags.None));
             PixelShader = dispose.Add(new PixelShader(Device, PixelShaderByteCode));
-            
+
             if (geoEntry != null)
             {
                 GeometryShaderByteCode = dispose.Add(ShaderBytecode.Compile(code, geoEntry, "gs_" + version, ShaderFlags.None, EffectFlags.None));
@@ -238,7 +238,7 @@ namespace ZenithEngine.DXHelper
                 {
                     context.InputAssembler.InputLayout = val.Input;
                     context.VertexShader.Set(val.Vert);
-                    context.PixelShader.Set(val.Pixel); 
+                    context.PixelShader.Set(val.Pixel);
                     context.GeometryShader.Set(val.Geo);
                 });
         }

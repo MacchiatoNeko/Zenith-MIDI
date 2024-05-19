@@ -1,9 +1,6 @@
-﻿using System;
+﻿using OpenTK.Graphics.OpenGL;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
 
 namespace ZenithEngine.GLEngine
 {
@@ -28,7 +25,7 @@ namespace ZenithEngine.GLEngine
 
         public GLEnabler UseInstancedBuffers(int start, int count)
         {
-            for(int i = start; i < count + start; i++)
+            for (int i = start; i < count + start; i++)
             {
                 if (!instancedBuffers.Contains(i))
                 {

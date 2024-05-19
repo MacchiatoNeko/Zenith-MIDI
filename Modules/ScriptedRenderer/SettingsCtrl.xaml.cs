@@ -1,7 +1,7 @@
 ﻿using Microsoft.CSharp;
-using Microsoft.CSharp.RuntimeBinder;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SharpCompress;
+using ScriptedEngine;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Rar;
 using SharpCompress.Archives.SevenZip;
@@ -11,30 +11,20 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Dynamic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ScriptedEngine;
-using Brushes = System.Windows.Media.Brushes;
-using Path = System.IO.Path;
 using ZenithEngine.UI;
-using System.Threading;
-using Newtonsoft.Json;
+using Brushes = System.Windows.Media.Brushes;
 using Font = ScriptedEngine.Font;
+using Path = System.IO.Path;
 
 namespace ScriptedRender
 {

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using SharpDX.Direct3D;
+﻿using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
-using Device = SharpDX.Direct3D11.Device;
 using SharpDX.Mathematics.Interop;
+using System;
+using Device = SharpDX.Direct3D11.Device;
 
 namespace DX.WPF
 {

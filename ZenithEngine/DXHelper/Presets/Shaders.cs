@@ -1,13 +1,8 @@
-﻿using OpenTK.Graphics.ES11;
-using SharpDX;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZenithEngine.DXHelper.Presets
 {
@@ -127,7 +122,7 @@ namespace ZenithEngine.DXHelper.Presets
         public static ShaderProgram MultiTexture(int texCount, string applyCol = null)
         {
             string defs = "";
-            for(int i = 0; i < texCount; i++)
+            for (int i = 0; i < texCount; i++)
             {
                 if (i != 0) defs += "\n";
                 defs += $"        case {i}: return Textures[{i}].Sample(Sampler, uv);";

@@ -1,10 +1,8 @@
 ﻿using SharpDX.Direct3D11;
+using SharpDX.DXGI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharpDX.DXGI;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -16,13 +14,13 @@ namespace ZenithEngine.DXHelper
         public InputElement Layout { get; }
         public int Order { get; }
 
-        public AssemblyElement(string name, Format format, [CallerLineNumber]int order = 0)
+        public AssemblyElement(string name, Format format, [CallerLineNumber] int order = 0)
         {
             Layout = new InputElement(name, 0, format, 0);
             Order = order;
         }
 
-        public AssemblyElement(string name, Format format, int offset, [CallerLineNumber]int order = 0)
+        public AssemblyElement(string name, Format format, int offset, [CallerLineNumber] int order = 0)
         {
             Layout = new InputElement(name, 0, format, offset, 0);
             Order = order;

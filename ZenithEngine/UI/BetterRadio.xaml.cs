@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ZenithEngine.UI
@@ -93,7 +87,7 @@ namespace ZenithEngine.UI
         void RecursiveUncheck(FrameworkElement p)
         {
             if (p is Panel)
-                foreach (var c in ((Panel)p).Children) if(c is FrameworkElement) RecursiveUncheck((FrameworkElement)c);
+                foreach (var c in ((Panel)p).Children) if (c is FrameworkElement) RecursiveUncheck((FrameworkElement)c);
             if (p is BetterRadio && p != this) ((BetterRadio)p).IsChecked = false;
         }
 

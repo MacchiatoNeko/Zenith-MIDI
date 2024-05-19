@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharpDX;
-using SharpDX.Direct3D11;
+﻿using SharpDX.Direct3D11;
+using System;
 
 namespace ZenithEngine.DXHelper
 {
@@ -41,7 +36,8 @@ namespace ZenithEngine.DXHelper
             return desc;
         }
 
-        public static DepthStencilStateDescription DescFromPreset(DepthStencilPresets preset) {
+        public static DepthStencilStateDescription DescFromPreset(DepthStencilPresets preset)
+        {
             switch (preset)
             {
                 case DepthStencilPresets.Basic: return BasicStateDescription();

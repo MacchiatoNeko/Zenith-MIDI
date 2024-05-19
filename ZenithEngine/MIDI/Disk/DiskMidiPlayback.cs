@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZenithEngine.MIDI.Disk
 {
@@ -45,7 +43,7 @@ namespace ZenithEngine.MIDI.Disk
 
             if (maxAllocation != null)
             {
-                while(maxSize > 100000)
+                while (maxSize > 100000)
                 {
                     var sum = file.TrackPositions
                         .Select(t => (long)t.length)

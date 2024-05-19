@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZenithEngine;
+﻿using SharpDX.Direct3D11;
+using System;
 using System.Windows.Media;
-using System.Drawing;
-using System.Windows.Interop;
-using System.Windows;
-using System.IO;
-using System.Windows.Media.Imaging;
-using System.Windows.Controls;
+using ZenithEngine;
 using ZenithEngine.DXHelper;
 using ZenithEngine.DXHelper.Presets;
-using System.Runtime.InteropServices;
-using ZenithEngine.ModuleUtil;
 using ZenithEngine.Modules;
-using ZenithEngine.MIDI;
 using ZenithEngine.ModuleUI;
-using SharpDX.Direct3D11;
+using ZenithEngine.ModuleUtil;
 
 namespace FlatRender
 {

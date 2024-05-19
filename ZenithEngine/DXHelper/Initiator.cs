@@ -1,9 +1,5 @@
-﻿using SharpDX.Direct3D11;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZenithEngine.DXHelper
 {
@@ -11,7 +7,7 @@ namespace ZenithEngine.DXHelper
     {
         List<IDeviceInitiable> items = new List<IDeviceInitiable>();
 
-        public T Add<T>(T item) 
+        public T Add<T>(T item)
             where T : IDeviceInitiable
         {
             items.Add(item);
@@ -20,7 +16,7 @@ namespace ZenithEngine.DXHelper
 
         protected override void DisposeInternal()
         {
-            for(int i = items.Count - 1; i >= 0; i--)
+            for (int i = items.Count - 1; i >= 0; i--)
             {
                 items[i].Dispose();
             }
@@ -28,7 +24,7 @@ namespace ZenithEngine.DXHelper
 
         protected override void InitInternal()
         {
-            foreach (var i in items) 
+            foreach (var i in items)
                 i.Init(Device);
         }
 
@@ -38,7 +34,7 @@ namespace ZenithEngine.DXHelper
             {
                 if (!items.Contains(prevItem)) throw new ArgumentException("Previous item not found in items array");
                 items.Remove(prevItem);
-                if(Initialized) prevItem.Dispose();
+                if (Initialized) prevItem.Dispose();
             }
 
             items.Add(newItem);

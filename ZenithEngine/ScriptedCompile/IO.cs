@@ -1,14 +1,11 @@
-﻿using System;
+﻿using OpenTK;
+using OpenTK.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
 using ZenithEngine;
-using OpenTK.Graphics;
 using ZenithEngine.MIDI;
 
 namespace ScriptedEngine

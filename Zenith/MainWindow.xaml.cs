@@ -1,40 +1,26 @@
 ﻿using ZenithEngine;
-using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Path = System.IO.Path;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
-using System.IO;
 using System.IO.Compression;
 using ZenithEngine.Modules;
 using ZenithEngine.MIDI;
 using ZenithEngine.MIDI.Disk;
-using ZenithEngine.GLEngine;
-using ZenithEngine.GLEngine.Types;
 using System.Collections.ObjectModel;
 using ZenithEngine.UI;
-using OpenTK.Graphics;
 using System.Globalization;
 using ZenithEngine.MIDI.Audio;
 
@@ -282,27 +268,19 @@ namespace Zenith
 
         #endregion
 
-
         MidiFile midifile = null;
         string midipath = "";
-
         FrameworkElement pluginControl = null;
-
         ObservableCollection<IModuleRender> RenderModules { get; } = new ObservableCollection<IModuleRender>();
-
         List<Dictionary<string, ResourceDictionary>> Languages = new List<Dictionary<string, ResourceDictionary>>();
-
         bool foundOmniMIDI = true;
         bool OmniMIDIDisabled = false;
-
         long lastBackgroundChangeTime = 0;
-
         string defaultPlugin = "Classic";
 
         ModuleManager ModuleRunner { get; } = new ModuleManager();
         InstanceSettings Instance { get; } = new InstanceSettings();
         InstallSettings InstallSettings { get; } = new InstallSettings();
-
         RenderStatus CurrentRenderStatus { get; set; } = null;
 
         public void LoadMidi(string path)
@@ -344,12 +322,10 @@ namespace Zenith
         public MainWindow()
         {
             InitBindings();
-
             InitializeComponent();
             SetCustomFFMPEGOptions();
 
             pluginsList.ItemsSource = RenderModules;
-
             windowTabs.VersionName = InstallSettings.VersionName;
 
             SourceInitialized += (s, e) =>
@@ -512,10 +488,10 @@ namespace Zenith
             int close = -1;
             int far = -1;
 
-            for(int i = 0; i < RenderModules.Count; i++)
+            for (int i = 0; i < RenderModules.Count; i++)
             {
                 var n = RenderModules[RenderModules.Count - i - 1].Name;
-                if(n == name)
+                if (n == name)
                     instant = i;
                 if (n.ToLower() == name.ToLower())
                     close = i;
@@ -796,7 +772,7 @@ namespace Zenith
                     viewWidth.Value = 7680;
                     viewHeight.Value = 4320;
                     break;
-                case "16k":
+                case "16k": // Who would use this?
                     viewWidth.Value = 15360;
                     viewHeight.Value = 8640;
                     break;

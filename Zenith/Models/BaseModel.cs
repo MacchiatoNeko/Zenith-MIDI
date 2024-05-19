@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using System.ComponentModel;
-using ZenithEngine;
 using System.Collections.ObjectModel;
-using ZenithEngine.Modules;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using ZenithEngine.MIDI.Audio;
+using ZenithEngine;
 using ZenithEngine.DXHelper;
+using ZenithEngine.MIDI.Audio;
+using ZenithEngine.Modules;
 using ZenithEngine.ModuleUI;
 
 namespace Zenith.Models
@@ -27,10 +25,10 @@ namespace Zenith.Models
 
         public ObservableCollection<IModuleRender> RenderModules { get; } = new ObservableCollection<IModuleRender>();
         public IModuleRender SelectedModule { get; set; } = null;
-        public UIElement SelectedModuleSettings => 
-            SelectedModule == null ? null : 
-            SelectedModule.SettingsControl is FrameworkElement ? SelectedModule.SettingsControl as FrameworkElement: 
-            SelectedModule.SettingsControl is IControl ? (SelectedModule.SettingsControl as IControl).Control : 
+        public UIElement SelectedModuleSettings =>
+            SelectedModule == null ? null :
+            SelectedModule.SettingsControl is FrameworkElement ? SelectedModule.SettingsControl as FrameworkElement :
+            SelectedModule.SettingsControl is IControl ? (SelectedModule.SettingsControl as IControl).Control :
             null;
         ModuleManager moduleManager { get; } = new ModuleManager();
 

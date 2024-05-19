@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -89,7 +85,7 @@ namespace ZenithEngine.UI
             new InplaceConverter<bool, bool, bool>(
                 new BBinding(LoadingProperty, this),
                 new BBinding(LoadingInternalProperty, this),
-                (l1, l2) => 
+                (l1, l2) =>
                     l1 || l2
                 )
                 .Set(this, ShowingLoaderProperty);

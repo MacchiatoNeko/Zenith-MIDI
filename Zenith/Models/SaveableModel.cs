@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft;
-using Newtonsoft.Json.Linq;
-using System.Threading;
-using System.Diagnostics;
 
 namespace Zenith.Models
 {
@@ -35,7 +28,7 @@ namespace Zenith.Models
             watcher.Changed += Watcher_Changed;
 
             PropertyChanged += SaveableModel_PropertyChanged;
-            
+
             watcher.EnableRaisingEvents = true;
 
             ReadSettings();

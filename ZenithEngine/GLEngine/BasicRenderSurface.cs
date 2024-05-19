@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace ZenithEngine.GLEngine
 {
@@ -57,7 +53,7 @@ namespace ZenithEngine.GLEngine
         {
             GL.DeleteFramebuffer(BufferID);
             GL.DeleteTexture(TextureID);
-            if(DepthBufferID != -1) GL.DeleteTexture(DepthBufferID);
+            if (DepthBufferID != -1) GL.DeleteTexture(DepthBufferID);
         }
     }
 }

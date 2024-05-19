@@ -1,16 +1,11 @@
-﻿using System;
+﻿using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics;
-using OpenTK;
 using System.Drawing.Imaging;
+using System.Linq;
 using Size = System.Drawing.Size;
 
 namespace ZenithEngine

@@ -1,9 +1,7 @@
 ﻿using SharpDX;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +24,8 @@ namespace DX.WPF
         List<DateTime> frameTimes = new List<DateTime>();
 
         public int FPSLock { get; set; } = 60;
-        public bool SingleThreadedRender { 
+        public bool SingleThreadedRender
+        {
             get => runner == null;
             set
             {
@@ -54,7 +53,7 @@ namespace DX.WPF
                     renderThread?.Wait();
                     renderThread = null;
                 }
-            } 
+            }
         }
         Stopwatch frameTimer = new Stopwatch();
         double delayExtraDelay = 0;

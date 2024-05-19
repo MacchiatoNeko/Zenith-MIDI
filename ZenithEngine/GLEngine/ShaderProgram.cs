@@ -1,9 +1,7 @@
-﻿using System;
+﻿using OpenTK.Graphics.OpenGL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
 
 namespace ZenithEngine.GLEngine
 {
@@ -68,7 +66,7 @@ namespace ZenithEngine.GLEngine
 
             string prepend = "";
 
-            foreach(var k in defines)
+            foreach (var k in defines)
             {
                 prepend += $"#define {k.Key} {k.Value}\n";
             }
@@ -79,9 +77,9 @@ namespace ZenithEngine.GLEngine
                 {
                     var lines = code.Split('\n');
                     var versionLine = Array.FindIndex(lines, (l) => l.Contains("#version"));
-                    if(versionLine == -1) throw new ApplicationException("Version line missing in shader");
+                    if (versionLine == -1) throw new ApplicationException("Version line missing in shader");
 
-                    code = string.Join("\n", 
+                    code = string.Join("\n",
                         lines.Take(versionLine + 1)
                         .Concat(new[] { "", prepend, "" })
                         .Concat(lines.Skip(versionLine + 1))
@@ -137,7 +135,7 @@ namespace ZenithEngine.GLEngine
             }
 
             Dispose();
-            
+
             return this;
         }
 

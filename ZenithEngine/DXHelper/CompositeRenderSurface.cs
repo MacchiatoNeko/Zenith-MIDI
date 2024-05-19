@@ -1,11 +1,5 @@
-﻿using SharpDX;
-using SharpDX.Direct3D11;
+﻿using SharpDX.Direct3D11;
 using SharpDX.DXGI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace ZenithEngine.DXHelper
@@ -67,7 +61,7 @@ namespace ZenithEngine.DXHelper
                     OptionFlags = ResourceOptionFlags.Shared
                 }));
                 RenderTargetDepth = dispose.Add(new DepthStencilView(Device, DepthTexture));
-                if(UseDepthResource) DepthTextureResource = dispose.Add(new ShaderResourceView(Device, DepthTexture));
+                if (UseDepthResource) DepthTextureResource = dispose.Add(new ShaderResourceView(Device, DepthTexture));
             }
             RenderTarget = dispose.Add(new RenderTargetView(Device, Texture));
             TextureResource = dispose.Add(new ShaderResourceView(Device, Texture));

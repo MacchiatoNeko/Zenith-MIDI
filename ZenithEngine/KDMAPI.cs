@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
-static class  KDMAPI
+static class KDMAPI
 {
     public struct MIDIHDR
     {
@@ -73,7 +69,7 @@ static class  KDMAPI
         double ASIOInputLatency;
         double ASIOOutputLatency;
     }
-    
+
     [DllImport("OmniMIDI\\OmniMIDI")]
     public static extern bool ReturnKDMAPIVer(out Int32 Major, out Int32 Minor, out Int32 Build, out Int32 Revision);
 

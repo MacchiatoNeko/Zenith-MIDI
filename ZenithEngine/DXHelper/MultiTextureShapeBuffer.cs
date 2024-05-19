@@ -1,10 +1,6 @@
 ﻿using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZenithEngine.DXHelper
 {
@@ -45,7 +41,7 @@ namespace ZenithEngine.DXHelper
 
         void ClearResources()
         {
-            for(int i = 0; i < resources.Length; i++)
+            for (int i = 0; i < resources.Length; i++)
             {
                 resources[i] = null;
             }

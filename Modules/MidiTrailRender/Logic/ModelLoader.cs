@@ -1,12 +1,11 @@
 ﻿using ObjLoader.Loader.Data.Elements;
 using ObjLoader.Loader.Loaders;
-using OpenTK.Graphics.OpenGL;
 using SharpCompress.Compressors.Xz;
 using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 using ZenithEngine.DXHelper;
 using ZenithEngine.ModuleUtil;
@@ -79,9 +78,14 @@ namespace MIDITrailRender.Logic
 
         static LoadResult GetObjModel()
         {
-            var factory = new ObjLoaderFactory();
+            ObjLoaderFactory factory = new();
             var objLoader = factory.Create();
-            var embed = Util.OpenEmbedStream("MIDITrailRender.models.obj.xz");
+            //var resourceNames = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            //foreach (var resourceName in resourceNames)
+            //{
+            //    Console.WriteLine("[MidiTrailRender Debug] Resource found -> " + resourceName);
+            //}
+            var embed = Util.OpenEmbedStream("MidiTrailRender.models.obj.xz");
             var extract = new XZStream(embed);
             return objLoader.Load(extract);
         }

@@ -1,9 +1,5 @@
 ﻿using SharpDX.Direct3D11;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZenithEngine.DXHelper
 {
@@ -68,7 +64,7 @@ namespace ZenithEngine.DXHelper
             BlendStateDescription blendDesc = new BlendStateDescription();
             blendDesc.AlphaToCoverageEnable = false;
             blendDesc.IndependentBlendEnable = false;
-            for(int i = 0; i < blendDesc.RenderTarget.Length; i++)
+            for (int i = 0; i < blendDesc.RenderTarget.Length; i++)
                 blendDesc.RenderTarget[i] = renderTargetDesc;
 
             return blendDesc;

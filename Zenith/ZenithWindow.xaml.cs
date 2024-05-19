@@ -1,14 +1,13 @@
-﻿using ZenithEngine;
+﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Runtime.InteropServices;
 using System.Windows.Interop;
-using ZenithEngine.UI;
-using ZenithEngine.ModuleUI;
-using Newtonsoft.Json.Linq;
 using Zenith.Models;
+using ZenithEngine.ModuleUI;
+using ZenithEngine.UI;
 
 namespace Zenith
 {
@@ -255,7 +254,7 @@ namespace Zenith
 
             if (!DataBase.HasTriedLoadingModules)
                 Task.Run(() => DataBase.LoadAllModules());
-            if (!DataBase.KdmapiConnected) 
+            if (!DataBase.KdmapiConnected)
                 Task.Run(() => DataBase.LoadKdmapi());
 
             SourceInitialized += (s, e) =>

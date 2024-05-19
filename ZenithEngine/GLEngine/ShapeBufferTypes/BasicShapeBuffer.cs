@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenTK.Graphics.OpenGL;
-using System.Threading.Tasks;
-using ZenithEngine.GLEngine.Types;
+﻿using OpenTK;
 using OpenTK.Graphics;
-using OpenTK;
+using ZenithEngine.GLEngine.Types;
 
 namespace ZenithEngine.GLEngine
 {

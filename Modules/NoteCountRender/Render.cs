@@ -1,24 +1,19 @@
+using OpenTK.Graphics;
 using SharpDX.Direct3D11;
+using SharpDX.Mathematics.Interop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Text.RegularExpressions;
 using System.Windows.Media;
 using ZenithEngine;
 using ZenithEngine.DXHelper;
+using ZenithEngine.DXHelper.D2D;
+using ZenithEngine.DXHelper.Presets;
 using ZenithEngine.MIDI;
 using ZenithEngine.Modules;
-using Direct2D1 = SharpDX.Direct2D1;
-using DXGI = SharpDX.DXGI;
-using DirectWrite = SharpDX.DirectWrite;
-using SharpDX.Mathematics.Interop;
-using ZenithEngine.DXHelper.Presets;
-using ZenithEngine.DXHelper.D2D;
-using OpenTK.Graphics;
-using System.Text.RegularExpressions;
 using ZenithEngine.ModuleUI;
+using DirectWrite = SharpDX.DirectWrite;
 
 namespace NoteCountRender
 {

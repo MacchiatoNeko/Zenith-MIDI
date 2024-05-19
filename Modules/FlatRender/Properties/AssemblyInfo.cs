@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Zenith")]
+[assembly: AssemblyTitle("FlatRender")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Zenith")]
+[assembly: AssemblyProduct("FlatRender")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("273da7bd-c89a-4574-97de-af425529faae")]
+[assembly: Guid("ae59479c-9d0d-464c-a4d3-8fdd7e1f3786")]
 
 // Version information for an assembly consists of the following four values:
 //

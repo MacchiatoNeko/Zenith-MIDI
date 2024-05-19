@@ -1,16 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Threading;
-using System.Threading;
-using System.Windows.Controls;
 
 namespace ZenithEngine.ModuleUI
 {
@@ -19,7 +14,7 @@ namespace ZenithEngine.ModuleUI
     {
         private readonly int order;
         private readonly string name;
-        public UIChild([CallerMemberName] string name = null, [CallerLineNumber]int order = 0)
+        public UIChild([CallerMemberName] string name = null, [CallerLineNumber] int order = 0)
         {
             this.order = order;
             this.name = name;
@@ -58,7 +53,7 @@ namespace ZenithEngine.ModuleUI
     public class UIContainerData
     {
         public UIContainerData(
-            UIElement[] elements, 
+            UIElement[] elements,
             Dictionary<string, ISerializableItem> dataItems,
             ISerializableContainer[] containers)
         {
@@ -91,7 +86,7 @@ namespace ZenithEngine.ModuleUI
             var dataItems = new Dictionary<string, ISerializableItem>();
             var containers = new List<ISerializableContainer>();
 
-            foreach(var m in selected)
+            foreach (var m in selected)
             {
                 object child = null;
                 if (m is PropertyInfo)
@@ -111,7 +106,7 @@ namespace ZenithEngine.ModuleUI
                 {
                     elements.Add((UIElement)child);
                 }
-                if(child is IControl)
+                if (child is IControl)
                 {
                     elements.Add(((IControl)child).Control);
                 }

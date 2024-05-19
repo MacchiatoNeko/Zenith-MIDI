@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DX.WPF;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using DX.WPF;
 
 namespace Zenith.Models
 {
@@ -27,7 +23,7 @@ namespace Zenith.Models
         public long LastFrameNumber { get; private set; }
 
         public DateTime RenderStartTime { get; }
-        public DateTime CurrentTime { get; private set;  }
+        public DateTime CurrentTime { get; private set; }
         public double TimeElapsed => (CurrentTime - RenderStartTime).TotalSeconds;
 
         Stopwatch frameTimer = null;
@@ -50,7 +46,7 @@ namespace Zenith.Models
             NotesRendering = Pipeline.Playback.LastIterateNoteCount;
             CurrentTime = DateTime.Now;
 
-            if(frameTimer == null)
+            if (frameTimer == null)
             {
                 frameTimer = new Stopwatch();
                 frameTimer.Start();

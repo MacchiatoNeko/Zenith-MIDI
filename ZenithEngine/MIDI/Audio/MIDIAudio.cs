@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -87,7 +84,7 @@ namespace ZenithEngine.MIDI.Audio
                 var t = time();
                 if (ev.time > t)
                 {
-                    wait(() => 
+                    wait(() =>
                         time() > ev.time - 0.2 * PlaybackSpeed
                     );
                     if (ended) continue;

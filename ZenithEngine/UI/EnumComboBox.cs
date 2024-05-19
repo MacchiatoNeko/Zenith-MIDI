@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -51,7 +48,7 @@ namespace ZenithEngine.UI
         private void EnumComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var val = SelectedItem as EnumComboBoxItem;
-            if(val != null)
+            if (val != null)
             {
                 Selected = val.EnumValue;
             }

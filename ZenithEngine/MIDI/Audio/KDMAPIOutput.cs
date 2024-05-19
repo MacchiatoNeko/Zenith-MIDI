@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZenithEngine.MIDI.Audio
 {
@@ -25,7 +21,7 @@ namespace ZenithEngine.MIDI.Audio
             KDMAPI.TerminateKDMAPIStream();
         }
 
-        public KDMAPIOutput() 
+        public KDMAPIOutput()
         { }
 
         public void Dispose()
@@ -42,7 +38,7 @@ namespace ZenithEngine.MIDI.Audio
 
         public void SendEvent(uint e)
         {
-            if(initialized) KDMAPI.SendDirectData(e);
+            if (initialized) KDMAPI.SendDirectData(e);
         }
 
         public void Reset()

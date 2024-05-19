@@ -1,11 +1,9 @@
-﻿using System;
+﻿using OpenTK.Graphics.OpenGL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
 
 namespace ZenithEngine.GLEngine
 {
@@ -21,7 +19,7 @@ namespace ZenithEngine.GLEngine
         public InputAssemblyPart Part { get; }
         public int Order { get; }
 
-        public AssemblyPart(int size, VertexAttribPointerType type, [CallerLineNumber]int order = 0)
+        public AssemblyPart(int size, VertexAttribPointerType type, [CallerLineNumber] int order = 0)
         {
             Part = new InputAssemblyPart(size, type);
             Order = order;

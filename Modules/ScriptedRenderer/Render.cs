@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZenithEngine;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK;
 using OpenTK.Graphics;
-using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using ScriptedEngine;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using ScriptedEngine;
+using ZenithEngine;
 using Font = ScriptedEngine.Font;
 
 namespace ScriptedRender
@@ -332,7 +329,7 @@ void main()
             foreach (var lt in s.fonts)
             {
                 lt.engine = new GLTextEngine();
-                if(lt.charMap == null)
+                if (lt.charMap == null)
                 {
                     lt.engine.SetFont(lt.fontName, (System.Drawing.FontStyle)lt.fontStyle, lt.fontPixelSize);
                 }
@@ -483,7 +480,7 @@ void main()
                 Matrix4 transform = Matrix4.Identity;
                 transform = Matrix4.Mult(transform, Matrix4.CreateScale(1.0f / renderSettings.PixelWidth * renderSettings.PixelHeight / f.fontPixelSize * (float)height, -1.0f / f.fontPixelSize * (float)height, 1.0f));
                 transform = Matrix4.Mult(transform, Matrix4.CreateTranslation((float)left * 2 - 1, (float)(bottom + height * 0.7) * 2 - 1, 0));
-                
+
                 f.engine.Render(text, transform, color);
 
                 if (currentShader == TextureShaders.Normal) GL.UseProgram(quadShader);
