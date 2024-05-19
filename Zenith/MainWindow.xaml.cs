@@ -466,23 +466,6 @@ namespace Zenith
                     MessageBox.Show(e.Message);
                 }
             }
-
-            SelectDefaultRenderer();
-        }
-
-        void SelectDefaultRenderer()
-        {
-            int i = 0;
-            foreach (var p in RenderModules)
-            {
-                if (p.Name == "Classic")
-                {
-                    SelectModule(i);
-                    return;
-                }
-                i++;
-            }
-            if (RenderModules.Count > 0) SelectModule(0);
         }
 
         public void SelectModule(string name)
@@ -501,42 +484,6 @@ namespace Zenith
                 if (n.ToLower().Replace(" ", "") == name.ToLower().Replace(" ", ""))
                     far = i;
             }
-            if (instant != -1) SelectModule(RenderModules.Count - 1 - instant);
-            else if (close != -1) SelectModule(RenderModules.Count - 1 - close);
-            else if (far != -1) SelectModule(RenderModules.Count - 1 - far);
-            else MessageBox.Show($"Could not find module with name similar to {name}");
-        }
-
-        public void SelectModule(int id)
-        {
-            //pluginControl = null;
-            //if (id == -1)
-            //{
-            //    ModuleRunner.ClearModule();
-            //    return;
-            //}
-            //pluginsList.SelectedIndex = id;
-            //ModuleRunner.UseModule(RenderModules[id]);
-            //var module = ModuleRunner.CurrentModule;
-            //previewImage.Source = module.PreviewImage;
-            //pluginDescription.Text = module.Description;
-
-            //var c = module.SettingsControl;
-            //if (c == null) return;
-            //pluginsSettings.Children.Clear();
-            //pluginsSettings.Children.Add(c);
-            //c.VerticalAlignment = VerticalAlignment.Stretch;
-            //c.HorizontalAlignment = HorizontalAlignment.Stretch;
-            //c.Width = double.NaN;
-            //c.Height = double.NaN;
-            //c.Margin = new Thickness(0);
-            //pluginControl = c;
-            //if (languageSelect.SelectedIndex != -1 && Languages[languageSelect.SelectedIndex].ContainsKey(module.LanguageDictName))
-            //{
-            //    c.Resources.MergedDictionaries.Clear();
-            //    c.Resources.MergedDictionaries.Add(Languages[0][module.LanguageDictName]);
-            //    c.Resources.MergedDictionaries.Add(Languages[languageSelect.SelectedIndex][module.LanguageDictName]);
-            //}
         }
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
@@ -741,7 +688,7 @@ namespace Zenith
 
         private void PluginsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectModule(pluginsList.SelectedIndex);
+
         }
 
         private void ResolutionPreset_SelectionChanged(object sender, SelectionChangedEventArgs e)

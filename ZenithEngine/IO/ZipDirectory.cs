@@ -222,13 +222,13 @@ namespace ZenithEngine.IO
             stream.Dispose();
         }
 
-        string NormalizePath(string path) =>
+        static string NormalizePath(string path) =>
             path.Replace('\\', '/').Trim().Trim('/').Trim();
 
         public override bool Exists(string path)
         {
             path = NormalizePath(path);
-            return archive.Entries.Where(e => e.Key == path).Take(1).Count() > 0;
+            return archive.Entries.Where(e => e.Key == path).Take(1).Any();
         }
 
         public override IEnumerable<string> FindAllFilenames()
@@ -241,14 +241,13 @@ namespace ZenithEngine.IO
             path = NormalizePath(path);
             var entries = archive.Entries.Where(e => e.Key == path).Take(1).ToArray();
             if (entries.Length == 0) throw new FileNotFoundException("File not found in archive", path);
-
             return entries[0].OpenEntryStream();
         }
     }
 
     class ZrpDirectory : ZipDirectory
     {
-        static Stream DecodeZrp(Stream encoded)
+        static Stream DecodeZrp(Stream encoded) // TODO: Use MemoryStream
         {
             var key = new byte[16];
             var iv = new byte[16];
@@ -260,7 +259,7 @@ namespace ZenithEngine.IO
             using (AesManaged aes = new())
             {
                 ICryptoTransform decryptor = aes.CreateDecryptor(key, iv);
-                using (CryptoStream cs = new CryptoStream(encoded, decryptor, CryptoStreamMode.Read))
+                using (CryptoStream cs = new(encoded, decryptor, CryptoStreamMode.Read))
                 {
                     cs.CopyTo(zrpstream);
                 }
