@@ -1,4 +1,4 @@
-using OpenTK.Graphics;
+using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.Mathematics.Interop;
 using System;

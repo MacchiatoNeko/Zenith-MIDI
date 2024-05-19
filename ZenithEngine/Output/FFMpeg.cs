@@ -1,8 +1,6 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using ZenithEngine.GLEngine;
 
 namespace ZenithEngine.Output
 {
@@ -29,20 +27,6 @@ namespace ZenithEngine.Output
 
             frameSize = width * height * 4;
             bufferFrame = new byte[frameSize];
-        }
-
-        public unsafe void WriteFrame(RenderSurface surface)
-        {
-            surface.BindSurface();
-            fixed (byte* frame = bufferFrame)
-            {
-                GL.ReadPixels(0, 0, surface.Width, surface.Height, PixelFormat.Bgra, PixelType.UnsignedByte, (IntPtr)frame);
-            }
-            if (writeTask != null) writeTask.Wait();
-            writeTask = Task.Run(() =>
-            {
-                process.StandardInput.BaseStream.Write(bufferFrame, 0, bufferFrame.Length);
-            });
         }
 
         public void Dispose()

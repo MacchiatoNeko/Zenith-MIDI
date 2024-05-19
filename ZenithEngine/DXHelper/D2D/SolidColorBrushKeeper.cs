@@ -1,6 +1,5 @@
-﻿using OpenTK.Graphics;
+﻿using SharpDX;
 using SharpDX.Direct2D1;
-using SharpDX.Mathematics.Interop;
 
 namespace ZenithEngine.DXHelper.D2D
 {
@@ -18,10 +17,9 @@ namespace ZenithEngine.DXHelper.D2D
         }
 
         public Color4 Color { get; }
-
-        protected override void InitInternal()
-        {
-            Brush = new SolidColorBrush(renderTarget, new RawColor4(Color.R, Color.G, Color.B, Color.A));
-        }
+        //protected override void InitInternal()
+        //{
+        //    Brush = new SolidColorBrush(renderTarget, new RawColor4(Color.R, Color.G, Color.B, Color.A));
+        //}
     }
 }
