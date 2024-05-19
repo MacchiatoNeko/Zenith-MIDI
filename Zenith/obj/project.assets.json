@@ -5442,11 +5442,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kohakow\\Desktop\\Zenith3\\Zenith\\Zenith.csproj",
+      "projectUniqueName": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\Zenith\\Zenith.csproj",
       "projectName": "Zenith",
-      "projectPath": "C:\\Users\\kohakow\\Desktop\\Zenith3\\Zenith\\Zenith.csproj",
+      "projectPath": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\Zenith\\Zenith.csproj",
       "packagesPath": "C:\\Users\\kohakow\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kohakow\\Desktop\\Zenith3\\Zenith\\obj\\",
+      "outputPath": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\Zenith\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5468,11 +5468,11 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Users\\kohakow\\Desktop\\Zenith3\\DX.WPF\\DX.WPF.csproj": {
-              "projectPath": "C:\\Users\\kohakow\\Desktop\\Zenith3\\DX.WPF\\DX.WPF.csproj"
+            "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\DX.WPF\\DX.WPF.csproj": {
+              "projectPath": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\DX.WPF\\DX.WPF.csproj"
             },
-            "C:\\Users\\kohakow\\Desktop\\Zenith3\\ZenithEngine\\ZenithEngine.csproj": {
-              "projectPath": "C:\\Users\\kohakow\\Desktop\\Zenith3\\ZenithEngine\\ZenithEngine.csproj"
+            "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\ZenithEngine\\ZenithEngine.csproj": {
+              "projectPath": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\ZenithEngine\\ZenithEngine.csproj"
             }
           }
         }

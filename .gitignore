@@ -1,6 +1,11 @@
 Builds/
 .vscode/
 .vs/
+Zenith/obj/
+ZenithEngine/obj/
+ZenithEngine/bin/
+DX.WPF/obj/
+DX.WPF/bin/
 Modules/ClassicRender/obj/
 Modules/ClassicRender/bin/
 Modules/FlatRender/obj/
@@ -15,3 +20,4 @@ Modules/ScriptedRenderer/obj/
 Modules/ScriptedRenderer/bin/
 Modules/TexturedRender/obj/
 Modules/TexturedRender/bin/
+*.cache

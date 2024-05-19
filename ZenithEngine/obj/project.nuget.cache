@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NAfP/0NNiNzw1H2PNaTf3Ulf8np3HP/utSUobv5zhapjHigmV1Ju1RwhaCDpEI/VZavnPZt3CgcWRmYF5TAM0w==",
+  "dgSpecHash": "9UhY9m+42XEEXnS604V99aAvu7YNThOBoHvcUmcS4KEkUAmx2glKiOnbVvBjssNhVYPmOtpROAKasAtj7sDxFg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kohakow\\Desktop\\Zenith3\\ZenithEngine\\ZenithEngine.csproj",
+  "projectFilePath": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\ZenithEngine\\ZenithEngine.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kohakow\\.nuget\\packages\\cjclutter.objloader\\1.0.0\\cjclutter.objloader.1.0.0.nupkg.sha512",
     "C:\\Users\\kohakow\\.nuget\\packages\\fody\\6.8.1\\fody.6.8.1.nupkg.sha512",

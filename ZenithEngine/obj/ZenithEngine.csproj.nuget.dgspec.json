@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kohakow\\Desktop\\Zenith3\\ZenithEngine\\ZenithEngine.csproj": {}
+    "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\ZenithEngine\\ZenithEngine.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kohakow\\Desktop\\Zenith3\\ZenithEngine\\ZenithEngine.csproj": {
+    "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\ZenithEngine\\ZenithEngine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kohakow\\Desktop\\Zenith3\\ZenithEngine\\ZenithEngine.csproj",
+        "projectUniqueName": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\ZenithEngine\\ZenithEngine.csproj",
         "projectName": "ZenithEngine",
-        "projectPath": "C:\\Users\\kohakow\\Desktop\\Zenith3\\ZenithEngine\\ZenithEngine.csproj",
+        "projectPath": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\ZenithEngine\\ZenithEngine.csproj",
         "packagesPath": "C:\\Users\\kohakow\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kohakow\\Desktop\\Zenith3\\ZenithEngine\\obj\\",
+        "outputPath": "C:\\Users\\kohakow\\Documents\\GitHub\\Zenith-MIDI\\ZenithEngine\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
