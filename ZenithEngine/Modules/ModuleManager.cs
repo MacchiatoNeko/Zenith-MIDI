@@ -78,9 +78,14 @@ namespace ZenithEngine.Modules
                         disposeQueue.Enqueue(m);
                     }
                 }
-                if (device != null && module != null) initQueue.Enqueue(module);
+                if (device != null && module != null)
+                {
+                    initQueue.Enqueue(module);
+                }
                 if (CurrentModule != null && CurrentModule.Initialized)
+                {
                     disposeQueue.Enqueue(CurrentModule);
+                }
                 CurrentModule = module;
             }
         }
