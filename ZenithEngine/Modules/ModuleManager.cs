@@ -88,15 +88,27 @@ namespace ZenithEngine.Modules
         public JObject SerializeModule()
         {
             ModuleUI.ISerializableContainer contianer = CurrentModule?.SettingsControl;
-            if (contianer == null) return new JObject();
-            else return contianer.Serialize();
+            if (contianer == null)
+            {
+                return new JObject();
+            }
+            else
+            {
+                return contianer.Serialize();
+            }
         }
 
         public void ParseModule(JObject data)
         {
             ModuleUI.ISerializableContainer contianer = CurrentModule?.SettingsControl;
-            if (contianer == null) return;
-            else contianer.Parse(data);
+            if (contianer == null)
+            {
+                return;
+            }
+            else
+            {
+                contianer.Parse(data);
+            }
         }
 
         public void StartRender(DeviceGroup device, MidiPlayback file, RenderStatus status)
