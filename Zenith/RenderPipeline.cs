@@ -375,10 +375,10 @@ namespace Zenith
 
                         cancel.ThrowIfCancellationRequested();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         state.Stop();
-                        throw e;
+                        throw;
                     }
                 }
 

@@ -19,7 +19,7 @@ namespace MIDITrailRender
             Load();
         }
 
-        void injectSettings(Settings insett, Settings outsett)
+        void InjectSettings(Settings insett, Settings outsett)
         {
             var sourceProps = typeof(Settings).GetFields().ToList();
             var destProps = typeof(Settings).GetFields().ToList();
@@ -42,7 +42,7 @@ namespace MIDITrailRender
                 return;
             }
             var s = new Settings();
-            injectSettings(sett, s);
+            InjectSettings(sett, s);
             settings.Add(name, s);
             Save();
         }
@@ -88,7 +88,7 @@ namespace MIDITrailRender
                 MessageBox.Show("Could not poad profile");
                 return;
             }
-            injectSettings(settings[name], dest);
+            InjectSettings(settings[name], dest);
         }
 
         public void DeleteProfile(string name)
