@@ -54,7 +54,6 @@
     <EmbeddedResource Include="DXHelper\Presets\Shaders\noise.fx" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CjClutter.ObjLoader" Version="1.0.0" />
     <PackageReference Include="Fody" Version="6.8.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
