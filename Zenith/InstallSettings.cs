@@ -1,5 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -42,15 +47,14 @@ namespace Zenith
 
         public void SaveConfig()
         {
-            var jobj = new JObject
-            {
-                { "version", VersionName },
-                { "langsVersion", LanguagesVersion },
-                { "selectedLang", SelectedLanguage },
-                { "autoUpdate", AutoUpdate },
-                { "installed", Installed },
-                { "installerVer", InstallerVer }
-            };
+            var jobj = new JObject();
+            jobj.Add("version", VersionName);
+            jobj.Add("langsVersion", LanguagesVersion);
+            jobj.Add("selectedLang", SelectedLanguage);
+            jobj.Add("autoUpdate", AutoUpdate);
+            jobj.Add("installed", Installed);
+            jobj.Add("installerVer", InstallerVer);
+
             var stream = new StreamWriter(new GZipStream(File.Open(SettingsPath, FileMode.Create), CompressionMode.Compress));
             stream.Write(JsonConvert.SerializeObject(jobj));
             stream.Close();

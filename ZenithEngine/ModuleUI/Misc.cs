@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Threading;
+using System.Threading;
+using System.Windows.Controls;
 
 namespace ZenithEngine.ModuleUI
 {
@@ -37,11 +44,13 @@ namespace ZenithEngine.ModuleUI
 
     public interface IControl
     {
+        UIElement Control { get; }
     }
 
     public interface IValueItem<T>
     {
         event EventHandler<T> ValueChanged;
+        Dispatcher Dispatcher { get; }
         T Value { get; set; }
         T ValueInternal { get; set; }
     }
@@ -49,13 +58,16 @@ namespace ZenithEngine.ModuleUI
     public class UIContainerData
     {
         public UIContainerData(
+            UIElement[] elements, 
             Dictionary<string, ISerializableItem> dataItems,
             ISerializableContainer[] containers)
         {
+            Elements = elements;
             DataItems = dataItems;
             Containers = containers;
         }
 
+        public UIElement[] Elements { get; }
         public Dictionary<string, ISerializableItem> DataItems { get; }
         public ISerializableContainer[] Containers { get; }
     }
@@ -75,6 +87,7 @@ namespace ZenithEngine.ModuleUI
                                      .Single()).Order
                            select property;
 
+            var elements = new List<UIElement>();
             var dataItems = new Dictionary<string, ISerializableItem>();
             var containers = new List<ISerializableContainer>();
 
@@ -93,6 +106,15 @@ namespace ZenithEngine.ModuleUI
                 {
                     throw new Exception("shouldnt reach here");
                 }
+
+                if (child is UIElement)
+                {
+                    elements.Add((UIElement)child);
+                }
+                if(child is IControl)
+                {
+                    elements.Add(((IControl)child).Control);
+                }
                 if (child is BaseElement)
                 {
                     if (child is ISerializableContainer)
@@ -107,7 +129,8 @@ namespace ZenithEngine.ModuleUI
                     }
                 }
             }
-            return null;
+
+            return new UIContainerData(elements.ToArray(), dataItems, containers.ToArray());
         }
     }
 }

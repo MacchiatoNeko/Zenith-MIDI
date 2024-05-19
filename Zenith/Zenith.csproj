@@ -1,11 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>8.0</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<Optimize>true</Optimize>
+	<PlatformTarget>x64</PlatformTarget>
+	<BaseOutputPath>..\Builds\</BaseOutputPath>
+	<ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="OpenTK" Version="4.8.2" />
+    <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <EmbeddedResource Include="Languages\en\main.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\DX.WPF\DX.WPF.csproj" />
+    <ProjectReference Include="..\ZenithEngine\ZenithEngine.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Content Include="icon.ico" />
+    <Resource Include="icon.png" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="Fody" Version="6.8.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+	<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+	<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenTK" Version="3.3.3" />
+    <PackageReference Include="PrettyBin" Version="1.1.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="SharpCompress" Version="0.37.2" />
     <PackageReference Include="SharpDX" Version="4.2.0" />
     <PackageReference Include="SharpDX.D3DCompiler" Version="4.2.0" />
     <PackageReference Include="SharpDX.Desktop" Version="4.2.0" />
@@ -13,17 +52,21 @@
     <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
     <PackageReference Include="SharpDX.DXGI" Version="4.2.0" />
     <PackageReference Include="SharpDX.Mathematics" Version="4.2.0" />
-    <PackageReference Include="Fody" Version="6.8.0" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="PrettyBin" Version="1.1.0" />
-    <PackageReference Include="SharpCompress" Version="0.37.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZenithEngine\ZenithEngine.csproj" />
-    <ProjectReference Include="..\ZenithShared\ZenithShared.csproj" />
+    <Page Remove="Languages\en\window.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets/" />
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

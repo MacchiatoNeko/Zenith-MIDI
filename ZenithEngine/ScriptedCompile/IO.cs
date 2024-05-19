@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using OpenTK;
 using ZenithEngine;
+using OpenTK.Graphics;
 using ZenithEngine.MIDI;
-using OpenTK.Mathematics;
 
 namespace ScriptedEngine
 {
@@ -359,12 +363,12 @@ namespace ScriptedEngine
         {
             foreach (var n in notes)
             {
-                if (!IsBlackKey(n.key)) yield return n;
+                if (!IsBlackKey(n.Key)) yield return n;
             }
 
             foreach (var n in notes)
             {
-                if (IsBlackKey(n.key)) yield return n;
+                if (IsBlackKey(n.Key)) yield return n;
             }
         }
 

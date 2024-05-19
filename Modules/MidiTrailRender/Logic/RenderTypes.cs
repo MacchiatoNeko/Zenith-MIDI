@@ -147,7 +147,7 @@ namespace MIDITrailRender.Logic
         public float Height;
 
         [AssemblyElement("PRESS", Format.R16_Float)]
-        public Half Press;
+        public SharpDX.Half Press;
 
         public NoteInstance(float left, float right, float start, float end, Color4 colorLeft, Color4 colorRight, float scale, float extraScale, bool pressed)
         {

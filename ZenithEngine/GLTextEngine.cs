@@ -12,7 +12,6 @@ using OpenTK.Graphics;
 using OpenTK;
 using System.Drawing.Imaging;
 using Size = System.Drawing.Size;
-using OpenTK.Mathematics;
 
 namespace ZenithEngine
 {

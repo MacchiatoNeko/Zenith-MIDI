@@ -1,29 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29001.49
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenith", "Zenith\Zenith.csproj", "{273DA7BD-C89A-4574-97DE-AF425529FAAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith", "Zenith\Zenith.csproj", "{273DA7BD-C89A-4574-97DE-AF425529FAAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenithEngine", "ZenithEngine\ZenithEngine.csproj", "{60F2212A-D56C-4776-836F-6A49453CDBC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZenithEngine", "ZenithEngine\ZenithEngine.csproj", "{60F2212A-D56C-4776-836F-6A49453CDBC4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{D60FA663-FD18-4342-A8C7-CD072DA1E4A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassicRender", "Modules\ClassicRender\ClassicRender.csproj", "{B733D6F1-78A8-43CA-91A3-28FA3E7025D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicRender", "Modules\ClassicRender\ClassicRender.csproj", "{B733D6F1-78A8-43CA-91A3-28FA3E7025D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PFARender", "Modules\PFARender\PFARender.csproj", "{84E13869-0D33-4A56-A1A8-0B6F12C76081}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PFARender", "Modules\PFARender\PFARender.csproj", "{84E13869-0D33-4A56-A1A8-0B6F12C76081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatRender", "Modules\FlatRender\FlatRender.csproj", "{AE59479C-9D0D-464C-A4D3-8FDD7E1F3786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatRender", "Modules\FlatRender\FlatRender.csproj", "{AE59479C-9D0D-464C-A4D3-8FDD7E1F3786}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidiTrailRender", "Modules\MidiTrailRender\MidiTrailRender.csproj", "{991E132A-A56D-49AB-BBEE-9828359BB307}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiTrailRender", "Modules\MidiTrailRender\MidiTrailRender.csproj", "{991E132A-A56D-49AB-BBEE-9828359BB307}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteCountRender", "Modules\NoteCountRender\NoteCountRender.csproj", "{5F30BA79-D86B-4FC6-BA76-7CBB9EBBA721}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteCountRender", "Modules\NoteCountRender\NoteCountRender.csproj", "{5F30BA79-D86B-4FC6-BA76-7CBB9EBBA721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TexturedRender", "Modules\TexturedRender\TexturedRender.csproj", "{ECF72523-79AE-4DD1-9421-60B1D8BCCB9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexturedRender", "Modules\TexturedRender\TexturedRender.csproj", "{ECF72523-79AE-4DD1-9421-60B1D8BCCB9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptedRender", "Modules\ScriptedRenderer\ScriptedRender.csproj", "{95F774EB-47A2-40B3-A0CE-E616BBD4D62B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptedRender", "Modules\ScriptedRenderer\ScriptedRender.csproj", "{95F774EB-47A2-40B3-A0CE-E616BBD4D62B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenithShared", "ZenithShared\ZenithShared.csproj", "{019E4CE1-547F-4A32-B02C-F190943713EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DX.WPF", "DX.WPF\DX.WPF.csproj", "{BD352A84-3DEC-47AD-87AB-1765237D7DEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,30 +141,21 @@ Global
 		{95F774EB-47A2-40B3-A0CE-E616BBD4D62B}.Release|x64.Build.0 = Release|x64
 		{95F774EB-47A2-40B3-A0CE-E616BBD4D62B}.Release|x86.ActiveCfg = Release|x86
 		{95F774EB-47A2-40B3-A0CE-E616BBD4D62B}.Release|x86.Build.0 = Release|x86
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Debug|x64.Build.0 = Debug|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Debug|x86.Build.0 = Debug|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Release|x64.ActiveCfg = Release|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Release|x64.Build.0 = Release|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Release|x86.ActiveCfg = Release|Any CPU
-		{019E4CE1-547F-4A32-B02C-F190943713EB}.Release|x86.Build.0 = Release|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Debug|x64.Build.0 = Debug|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Debug|x86.Build.0 = Debug|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Release|x64.ActiveCfg = Release|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Release|x64.Build.0 = Release|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Release|x86.ActiveCfg = Release|Any CPU
+		{BD352A84-3DEC-47AD-87AB-1765237D7DEE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{B733D6F1-78A8-43CA-91A3-28FA3E7025D4} = {D60FA663-FD18-4342-A8C7-CD072DA1E4A0}
-		{84E13869-0D33-4A56-A1A8-0B6F12C76081} = {D60FA663-FD18-4342-A8C7-CD072DA1E4A0}
-		{AE59479C-9D0D-464C-A4D3-8FDD7E1F3786} = {D60FA663-FD18-4342-A8C7-CD072DA1E4A0}
-		{991E132A-A56D-49AB-BBEE-9828359BB307} = {D60FA663-FD18-4342-A8C7-CD072DA1E4A0}
-		{5F30BA79-D86B-4FC6-BA76-7CBB9EBBA721} = {D60FA663-FD18-4342-A8C7-CD072DA1E4A0}
-		{ECF72523-79AE-4DD1-9421-60B1D8BCCB9E} = {D60FA663-FD18-4342-A8C7-CD072DA1E4A0}
-		{95F774EB-47A2-40B3-A0CE-E616BBD4D62B} = {D60FA663-FD18-4342-A8C7-CD072DA1E4A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8FECB4F7-95FB-4E36-BDEE-C79BB233B885}

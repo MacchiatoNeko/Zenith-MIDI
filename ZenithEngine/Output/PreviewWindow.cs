@@ -7,8 +7,6 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
-using OpenTK.Windowing.Common;
-using OpenTK.Windowing.Desktop;
 using ZenithEngine.GLEngine;
 
 namespace ZenithEngine.Output
