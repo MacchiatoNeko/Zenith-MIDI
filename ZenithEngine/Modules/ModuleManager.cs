@@ -7,7 +7,6 @@ using System.Reflection;
 using ZenithEngine.DXHelper;
 using ZenithEngine.DXHelper.Presets;
 using ZenithEngine.MIDI;
-using ZenithEngine.ModuleUI;
 
 namespace ZenithEngine.Modules
 {
@@ -88,14 +87,14 @@ namespace ZenithEngine.Modules
 
         public JObject SerializeModule()
         {
-            var contianer = CurrentModule?.SettingsControl;
+            ModuleUI.ISerializableContainer contianer = CurrentModule?.SettingsControl;
             if (contianer == null) return new JObject();
             else return contianer.Serialize();
         }
 
         public void ParseModule(JObject data)
         {
-            var contianer = CurrentModule?.SettingsControl;
+            ModuleUI.ISerializableContainer contianer = CurrentModule?.SettingsControl;
             if (contianer == null) return;
             else contianer.Parse(data);
         }
