@@ -3,6 +3,7 @@ using SharpDX.Direct3D11;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using System.Windows.Media;
 using ZenithEngine;
 using ZenithEngine.DXHelper;
@@ -142,9 +143,20 @@ namespace TexturedRender
                 float barHeight = keyboardHeightFull * (float)pack.barHeight / 100;
                 if (pack.UseBar) keyboardHeight -= barHeight;
 
-                double noteScreenTime = view.NoteScreenTime;
+                double screenTime;
+                const ushort standardPPQ = 96 * 2;
+                if (!Midi.TimeBased)
+                {
+                    ushort ppq = Midi.Midi.PPQ;
+                    float scale = (float)ppq / standardPPQ;
+                    screenTime = view.NoteScreenTime * scale;
+                }
+                else
+                {
+                    screenTime = view.NoteScreenTime;
+                }
 
-                double notePosFactor = 1 / noteScreenTime * (1 - keyboardHeightFull);
+                double notePosFactor = 1 / screenTime * (1 - keyboardHeightFull);
 
                 double whiteKeyWidth = keyboard.WhiteKeyWidth;
 
@@ -160,8 +172,7 @@ namespace TexturedRender
 
                 double midiTime = Midi.PlayerPosition;
 
-                Midi.CheckParseDistance(noteScreenTime + topExtraTime);
-
+                Midi.CheckParseDistance(screenTime + topExtraTime);
 
                 var noteTypesSorted = pack.notes
                     .OrderBy(n => n.keyType == NoteType.Both ? 1 : 0)
@@ -196,7 +207,7 @@ namespace TexturedRender
                     buffer.Push(new VertMultiTex2D(new Vector2(tl.X, br.Y), new Vector2(uvtl.X, uvbr.Y), colBottom, texid));
                 }
 
-                double renderCutoff = midiTime + noteScreenTime;
+                double renderCutoff = midiTime + screenTime;
 
                 var noteStreams = Midi.IterateNotesKeyed(midiTime - bottomExtraTime, renderCutoff + topExtraTime);
 

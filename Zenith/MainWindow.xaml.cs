@@ -653,9 +653,11 @@ namespace Zenith
 
         private void BrowseAlphaButton_Click(object sender, RoutedEventArgs e)
         {
-            var save = new SaveFileDialog();
-            save.OverwritePrompt = true;
-            save.Filter = "H.264 video (*.mp4)|*.mp4";
+            var save = new SaveFileDialog
+            {
+                OverwritePrompt = true,
+                Filter = "H.264 video (*.mp4)|*.mp4"
+            };
             if ((bool)save.ShowDialog())
             {
                 alphaPath.Text = save.FileName;
@@ -746,7 +748,9 @@ namespace Zenith
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (foundOmniMIDI)
+            {
                 KDMAPIOutput.Terminate();
+            }
         }
 
         private void Checkbox_Checked(object sender, RoutedEventArgs e)

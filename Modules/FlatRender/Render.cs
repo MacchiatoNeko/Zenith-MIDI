@@ -40,7 +40,18 @@ namespace FlatRender
 
         public override void RenderFrame(DeviceContext context, IRenderSurface renderSurface)
         {
-            double screenTime = settings.noteScreenTime;
+            double screenTime;
+            const ushort standardPPQ = 96 * 2;
+            if (!Midi.TimeBased)
+            {
+                ushort ppq = Midi.Midi.PPQ;
+                float scale = (float)ppq / standardPPQ;
+                screenTime = settings.noteScreenTime * scale;
+            }
+            else
+            {
+                screenTime = settings.noteScreenTime;
+            }
 
             Midi.CheckParseDistance(screenTime);
 
