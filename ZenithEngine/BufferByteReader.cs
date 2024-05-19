@@ -23,20 +23,20 @@ namespace ZenithEngine
 
         public BufferByteReader(DiskReadProvider stream, int buffersize, long streamstart, long streamlen)
         {
-            streamLen = streamlen;
-            stream = stream;
-            streamStart = streamstart;
+            this.streamLen = streamlen;
+            this.stream = stream;
+            this.streamStart = streamstart;
             if (buffersize > streamlen)
             {
                 isSingle = true;
                 buffersize = (int)streamlen;
-                bufferSize = buffersize;
+                this.bufferSize = buffersize;
                 buffer = new byte[buffersize];
                 UpdateBufferSingle();
             }
             else
             {
-                bufferSize = buffersize;
+                this.bufferSize = buffersize;
                 buffer = new byte[buffersize];
                 bufferNext = new byte[buffersize];
                 UpdateBuffer(pos, true);
@@ -74,6 +74,7 @@ namespace ZenithEngine
 
         public long Location => pos;
         public long Length => streamLen;
+
         public int Pushback = -1;
 
         public byte Read()
