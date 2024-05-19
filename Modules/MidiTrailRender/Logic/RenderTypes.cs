@@ -3,7 +3,6 @@ using SharpDX;
 using SharpDX.DXGI;
 using System.Runtime.InteropServices;
 using ZenithEngine.DXHelper;
-using Half = SharpDX.Half;
 
 namespace MIDITrailRender.Logic
 {
@@ -143,7 +142,7 @@ namespace MIDITrailRender.Logic
         public float Height;
 
         [AssemblyElement("PRESS", Format.R16_Float)]
-        public Half Press;
+        public SharpDX.Half Press;
 
         public NoteInstance(float left, float right, float start, float end, Color4 colorLeft, Color4 colorRight, float scale, float extraScale, bool pressed)
         {
@@ -155,7 +154,7 @@ namespace MIDITrailRender.Logic
             ColorRight = colorRight;
             Scale = scale;
             Height = extraScale;
-            Press = pressed ? 1 : 0;
+            Press = (pressed ? 1 : 0);
         }
     }
 }

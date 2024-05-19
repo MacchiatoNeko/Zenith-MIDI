@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Media;
 using Buffer = SharpDX.Direct3D11.Buffer;
 
 namespace ZenithEngine.DXHelper
@@ -103,7 +104,7 @@ namespace ZenithEngine.DXHelper
         public GeometryShader GeometryShader { get; private set; }
 
         public InputLayout InputLayout { get; private set; }
-        DisposeGroup dispose = new DisposeGroup();
+        DisposeGroup dispose = new();
 
         bool initedShader = false;
 
@@ -117,7 +118,7 @@ namespace ZenithEngine.DXHelper
 
         List<string> basicPrepend = new List<string>();
 
-        Dictionary<string, string> defines = new Dictionary<string, string>();
+        Dictionary<string, string> defines = new();
 
         public ShaderProgram(string shader, Type inputType, string version, string vertEntry, string fragEntry, string geoEntry = null)
             : this(shader, ShaderHelper.GetLayout(inputType), version, vertEntry, fragEntry, geoEntry)
@@ -154,7 +155,7 @@ namespace ZenithEngine.DXHelper
                 definesPrepend += $"#define {k.Key} {k.Value}\n";
             }
 
-            return String.Join("\n\n", basicPrepend) + "\n\n" + definesPrepend + "\n\n" + shader;
+            return string.Join("\n\n", basicPrepend) + "\n\n" + definesPrepend + "\n\n" + shader;
         }
 
         protected override void InitInternal()
@@ -171,12 +172,14 @@ namespace ZenithEngine.DXHelper
         {
             if (initedShader) return;
             initedShader = true;
-
             dispose = new DisposeGroup();
 
-            var code = GetPreparedCode();
-
+            string code = GetPreparedCode();
+            Console.WriteLine("[InitShader] Shader Code Length -> " + code.Length);
+            //Console.WriteLine(code + "\n");
             Console.WriteLine(string.Join("\n", code.Split('\n').Select((s, i) => $"{i + 1}. {s}").ToArray()));
+
+            Console.WriteLine($"[InitShader] vertEntry -> {vertEntry}, fragEntry -> {fragEntry}");
 
             VertexShaderByteCode = dispose.Add(ShaderBytecode.Compile(code, vertEntry, "vs_" + version, ShaderFlags.None, EffectFlags.None));
             VertexShader = dispose.Add(new VertexShader(Device, VertexShaderByteCode));
@@ -214,9 +217,7 @@ namespace ZenithEngine.DXHelper
             {
                 defines.Add(define, value);
             }
-
             DisposeShader();
-
             return this;
         }
 

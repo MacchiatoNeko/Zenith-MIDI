@@ -1,8 +1,6 @@
-﻿using MidiTrailRender.Enums;
-using MidiTrailRender.Logic.Batches;
-using MidiTrailRender.Structs;
-using ObjLoader.Loader.Data.Elements;
+﻿using ObjLoader.Loader.Data.Elements;
 using ObjLoader.Loader.Loaders;
+//using OpenTK.Graphics.OpenGL;
 using SharpCompress.Compressors.Xz;
 using SharpDX;
 using System;
@@ -16,15 +14,72 @@ namespace MIDITrailRender.Logic
 {
     public class ModelLoader
     {
+        #region Helper intermediate types
+        struct BasicVert
+        {
+            public BasicVert(Vector3 pos, Vector3 normal)
+            {
+                Pos = pos;
+                Normal = normal;
+            }
+
+            public Vector3 Pos;
+            public Vector3 Normal;
+        }
+
+        struct BoundingBox
+        {
+            public BoundingBox(IEnumerable<BasicVert> data)
+            {
+                X = new BoundingDimention(data.Select(d => d.Pos.X));
+                Y = new BoundingDimention(data.Select(d => d.Pos.Y));
+                Z = new BoundingDimention(data.Select(d => d.Pos.Z));
+            }
+
+            public BoundingDimention X { get; }
+            public BoundingDimention Y { get; }
+            public BoundingDimention Z { get; }
+        }
+
+        struct BoundingDimention
+        {
+            public BoundingDimention(IEnumerable<float> data)
+            {
+                Min = data.Min();
+                Max = data.Max();
+                Range = Max - Min;
+                Middle = (Max + Min) / 2;
+            }
+
+            public float Min { get; }
+            public float Max { get; }
+            public float Range { get; }
+            public float Middle { get; }
+        }
+
+        enum NoteFaceType
+        {
+            Cap,
+            Body
+        }
+
+        struct LabelledNoteFace
+        {
+            public LabelledNoteFace(Face face, NoteFaceType type)
+            {
+                Face = face;
+                Type = type;
+            }
+
+            public Face Face { get; }
+            public NoteFaceType Type { get; }
+        }
+        #endregion
+
         static LoadResult GetObjModel()
         {
-            ObjLoaderFactory factory = new();
+            var factory = new ObjLoaderFactory();
             var objLoader = factory.Create();
-            //var resourceNames = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            //foreach (var resourceName in resourceNames)
-            //{
-            //    Console.WriteLine("[MidiTrailRender Debug] Resource found -> " + resourceName);
-            //}
             var embed = Util.OpenEmbedStream("MidiTrailRender.models.obj.xz");
             var extract = new XZStream(embed);
             return objLoader.Load(extract);

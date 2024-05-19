@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using ZenithEngine.DXHelper.Presets;
 
@@ -16,16 +15,9 @@ namespace MIDITrailRender.Logic
 
         public static string ReadEmbed(string name)
         {
-            using var stream = OpenEmbedStream(name);
-            using var reader = new StreamReader(stream);
-            if (reader.ReadToEnd() == null)
-            {
-                throw new Exception();
-            }
-            else
-            {
+            using (var stream = OpenEmbedStream(name))
+            using (var reader = new StreamReader(stream))
                 return reader.ReadToEnd();
-            }
         }
 
         public static string ReadShader(string name)

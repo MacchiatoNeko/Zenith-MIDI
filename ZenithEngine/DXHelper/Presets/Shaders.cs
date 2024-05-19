@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace ZenithEngine.DXHelper.Presets
 {
-    [StructLayoutAttribute(LayoutKind.Sequential, Pack = 16)]
+    [StructLayout(LayoutKind.Sequential, Pack = 16)]
     public struct GlowShaderParams
     {
         public int PixelCount;
@@ -140,7 +140,6 @@ namespace ZenithEngine.DXHelper.Presets
             {
                 program.SetDefine("COLAPPLY");
             }
-
             return program;
         }
     }

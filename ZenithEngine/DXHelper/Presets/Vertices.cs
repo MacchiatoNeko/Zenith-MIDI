@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace ZenithEngine.DXHelper.Presets
 {
-    [StructLayoutAttribute(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Vert2D
     {
         [AssemblyElement("POSITION", Format.R32G32_Float)]
@@ -26,7 +26,7 @@ namespace ZenithEngine.DXHelper.Presets
         }
     }
 
-    [StructLayoutAttribute(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct VertTex2D
     {
         [AssemblyElement("POSITION", Format.R32G32_Float)]
@@ -46,7 +46,7 @@ namespace ZenithEngine.DXHelper.Presets
         }
     }
 
-    [StructLayoutAttribute(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct VertMultiTex2D
     {
         [AssemblyElement("POSITION", Format.R32G32_Float)]

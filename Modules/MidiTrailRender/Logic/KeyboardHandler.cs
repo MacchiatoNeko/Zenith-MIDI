@@ -1,6 +1,4 @@
-﻿using MidiTrailRender.Logic.Batches;
-using MidiTrailRender.Structs;
-using MIDITrailRender.Models;
+﻿using MIDITrailRender.Models;
 using SharpDX;
 using SharpDX.Direct3D11;
 using System;
