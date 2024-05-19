@@ -15,20 +15,18 @@ namespace Zenith
                 Console.Title = ("Zenith " + InstallSettings.VersionName);
                 Application app = new Application();
                 var window = new ZenithWindow();
-
-                window.Loaded += (s, e) =>
-                {
-                    //if(args.Length > 0)
-                    //{
-                    //    window.LoadMidi(args[0]);
-                    //}
-                    //if(args.Length > 1)
-                    //{
-                    //    window.SelectModule(args[1]);
-                    //    window.StartPipeline(false);
-                    //}
-                };
-
+                //window.Loaded += (s, e) =>
+                //{
+                //    if (args.Length > 0)
+                //    {
+                //        window.LoadMidi(args[0]);
+                //    }
+                //    if (args.Length > 1)
+                //    {
+                //        window.SelectModule(args[1]);
+                //        window.StartPipeline(false);
+                //    }
+                //};
                 app.Run(window);
 #if !DEBUG
             }
