@@ -15,7 +15,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="preview.png" />
 		<EmbeddedResource Include="models.obj.xz" />
 		<EmbeddedResource Include="Shaders\shared.fx" />
 		<EmbeddedResource Include="Shaders\notes.fx" />
@@ -23,12 +22,7 @@
 	</ItemGroup>
 	
   <ItemGroup>
-    <PackageReference Include="Fody" Version="6.8.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
     <PackageReference Include="SharpCompress" Version="0.37.2" />
     <PackageReference Include="SharpDX" Version="4.2.0" />
     <PackageReference Include="SharpDX.D3DCompiler" Version="4.2.0" />

@@ -59,7 +59,7 @@ namespace ZenithEngine.MIDI
         {
             this.pos = pos;
             this.rawTempo = rawTempo;
-            this.realTempo = 60000000.0 / rawTempo;
+            realTempo = 60000000.0 / rawTempo;
         }
 
         public long pos { get; internal set; }
@@ -71,10 +71,10 @@ namespace ZenithEngine.MIDI
     {
         public ColorChange(double pos, IMidiPlaybackTrack track, byte channel, Color4 col1, Color4 col2) : base(pos)
         {
-            this.Track = track;
-            this.Channel = channel;
-            this.Col1 = col1;
-            this.Col2 = col2;
+            Track = track;
+            Channel = channel;
+            Col1 = col1;
+            Col2 = col2;
         }
 
         public Color4 Col1 { get; internal set; }

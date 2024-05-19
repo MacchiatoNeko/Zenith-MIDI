@@ -199,7 +199,6 @@ namespace ZenithEngine.Modules
             //fullSizeFrame = disposer.Add(RenderSurface.BasicFrame(currentStatus.RenderWidth, currentStatus.RenderHeight));
             //downscale = disposer.Add(ShaderProgram.Presets.SSAA(currentStatus.OutputWidth, currentStatus.OutputHeight, currentStatus.SSAA));
             //composite = disposer.Add(new Compositor());
-
             if (CurrentModule != null && !CurrentModule.Initialized) initQueue.Enqueue(CurrentModule);
             ProcessQueues();
         }
