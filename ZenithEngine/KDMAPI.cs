@@ -5,15 +5,15 @@ static class KDMAPI
 {
     public struct MIDIHDR
     {
-        string lpdata;
-        uint dwBufferLength;
-        uint dwBytesRecorded;
-        IntPtr dwUser;
-        uint dwFlags;
-        IntPtr lpNext;
-        IntPtr reserved;
-        uint dwOffset;
-        IntPtr dwReserved;
+        public string lpdata;
+        public uint dwBufferLength;
+        public uint dwBytesRecorded;
+        public IntPtr dwUser;
+        public uint dwFlags;
+        public IntPtr lpNext;
+        public IntPtr reserved;
+        public uint dwOffset;
+        public IntPtr dwReserved;
     }
 
     public enum OMSettingMode
@@ -63,55 +63,122 @@ static class KDMAPI
 
     public struct DebugInfo
     {
-        float RenderingTime;
-        int[] ActiveVoices;
+        public float RenderingTime;
+        public int[] ActiveVoices;
 
-        double ASIOInputLatency;
-        double ASIOOutputLatency;
+        public double ASIOInputLatency;
+        public double ASIOOutputLatency;
     }
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    private const string DllName = "OmniMIDI\\OmniMIDI";
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern IntPtr LoadLibrary(string dllToLoad);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool FreeLibrary(IntPtr hModule);
+
+    private static IntPtr _dllHandle = IntPtr.Zero;
+
+    public static bool CanImportDll()
+    {
+        if (_dllHandle == IntPtr.Zero)
+        {
+            _dllHandle = LoadLibrary(DllName);
+        }
+
+        if (_dllHandle == IntPtr.Zero)
+        {
+            return false;
+        }
+
+        FreeLibrary(_dllHandle);
+        _dllHandle = IntPtr.Zero;
+        return true;
+    }
+
+    [DllImport(DllName, SetLastError = true)]
     public static extern bool ReturnKDMAPIVer(out Int32 Major, out Int32 Minor, out Int32 Build, out Int32 Revision);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern bool IsKDMAPIAvailable();
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern int InitializeKDMAPIStream();
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern int TerminateKDMAPIStream();
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern void ResetKDMAPIStream();
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern uint SendCustomEvent(uint eventtype, uint chan, uint param);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern uint SendDirectData(uint dwMsg);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern uint SendDirectDataNoBuf(uint dwMsg);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern uint SendDirectLongData(ref MIDIHDR IIMidiHdr);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern uint SendDirectLongDataNoBuf(ref MIDIHDR IIMidiHdr);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern uint PrepareLongData(ref MIDIHDR IIMidiHdr);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern uint UnprepareLongData(ref MIDIHDR IIMidiHdr);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern bool DriverSettings(OMSetting Setting, OMSettingMode Mode, IntPtr Value, Int32 cbValue);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern void LoadCustomSoundFontsList(ref String Directory);
 
-    [DllImport("OmniMIDI\\OmniMIDI")]
+    [DllImport(DllName, SetLastError = true)]
     public static extern DebugInfo GetDriverDebugInfo();
+
+    public static T ExecuteWithDllProtection<T>(Func<T> func)
+    {
+        if (CanImportDll())
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return default(T);
+            }
+        }
+        else
+        {
+            Console.WriteLine("DLL not found. Please ensure the OmniMIDI DLL is present.");
+            return default(T);
+        }
+    }
+
+    public static void ExecuteWithDllProtection(Action action)
+    {
+        if (CanImportDll())
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("DLL not found. Please ensure the OmniMIDI DLL is present.");
+        }
+    }
 }

@@ -13,10 +13,8 @@ namespace ZenithEngine.Modules
         string Description { get; }
         bool Initialized { get; }
         ImageSource PreviewImage { get; }
-
         ISerializableContainer SettingsControl { get; }
         public double StartOffset { get; }
-
         void Init(DeviceGroup device, MidiPlayback midi, RenderStatus status);
         void RenderFrame(DeviceContext context, IRenderSurface renderSurface);
         void ReloadTrackColors();

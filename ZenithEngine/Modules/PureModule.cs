@@ -12,18 +12,12 @@ namespace ZenithEngine.Modules
     public abstract class PureModule : DeviceInitiable, IModuleRender
     {
         public abstract string Name { get; }
-
         public abstract string Description { get; }
-
         public abstract ImageSource PreviewImage { get; }
-
         public virtual ISerializableContainer SettingsControl { get; }
-
         public abstract double StartOffset { get; }
-
         protected MidiPlayback Midi { get; private set; }
         protected RenderStatus Status { get; private set; }
-
         protected abstract NoteColorPalettePick PalettePicker { get; }
 
         public virtual void Init(DeviceGroup device, MidiPlayback midi, RenderStatus status)
@@ -46,8 +40,11 @@ namespace ZenithEngine.Modules
 
         public virtual void ReloadTrackColors()
         {
-            if (PalettePicker == null || Midi == null) return;
-            var cols = PalettePicker.GetColors(Midi.TrackCount);
+            if (PalettePicker == null || Midi == null)
+            {
+                return;
+            }
+            SharpDX.Color4[][] cols = PalettePicker.GetColors(Midi.TrackCount);
             Midi.ApplyColors(cols);
         }
 

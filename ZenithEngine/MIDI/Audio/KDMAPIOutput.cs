@@ -9,20 +9,19 @@ namespace ZenithEngine.MIDI.Audio
 
         public static void Init()
         {
-            if (initialized) return;
+            if (initialized || !KDMAPI.CanImportDll()) return;
             initialized = true;
-            KDMAPI.InitializeKDMAPIStream();
+            KDMAPI.ExecuteWithDllProtection(() => KDMAPI.InitializeKDMAPIStream());
         }
 
         public static void Terminate()
         {
-            if (!initialized) return;
+            if (!initialized || !KDMAPI.CanImportDll()) return;
             initialized = false;
-            KDMAPI.TerminateKDMAPIStream();
+            KDMAPI.ExecuteWithDllProtection(() => KDMAPI.TerminateKDMAPIStream());
         }
 
-        public KDMAPIOutput()
-        { }
+        public KDMAPIOutput() { }
 
         public void Dispose()
         {
@@ -38,12 +37,18 @@ namespace ZenithEngine.MIDI.Audio
 
         public void SendEvent(uint e)
         {
-            if (initialized) KDMAPI.SendDirectData(e);
+            if (initialized)
+            {
+                KDMAPI.ExecuteWithDllProtection(() => KDMAPI.SendDirectData(e));
+            }
         }
 
         public void Reset()
         {
-            KDMAPI.ResetKDMAPIStream();
+            if (initialized)
+            {
+                KDMAPI.ExecuteWithDllProtection(() => KDMAPI.ResetKDMAPIStream());
+            }
         }
     }
 }

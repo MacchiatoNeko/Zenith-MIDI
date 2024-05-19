@@ -5,13 +5,16 @@ namespace ZenithEngine
 {
     public class DisposeGroup : IDisposable
     {
-        List<IDisposable> items = new List<IDisposable>();
+        List<IDisposable> items = new();
 
         bool disposed = false;
 
         public void Dispose()
         {
-            if (disposed) return;
+            if (disposed) 
+            {
+                return;
+            }
             for (int i = items.Count - 1; i >= 0; i--)
             {
                 items[i].Dispose();
@@ -21,17 +24,26 @@ namespace ZenithEngine
 
         public T Add<T>(T item) where T : IDisposable
         {
-            if (disposed) throw new Exception("Can't add items to a disposed DisposeGroup");
+            if (disposed) 
+            {
+                throw new Exception("Can't add items to a disposed DisposeGroup");
+            }
             items.Add(item);
             return item;
         }
 
         public T Replace<T>(T prevItem, T newItem) where T : IDisposable
         {
-            if (disposed) throw new Exception("Can't add items to a disposed DisposeGroup");
+            if (disposed) 
+            {
+                throw new Exception("Can't add items to a disposed DisposeGroup");
+            }
             if (prevItem != null)
             {
-                if (!items.Contains(prevItem)) throw new ArgumentException("Previous item not found in items array");
+                if (!items.Contains(prevItem)) 
+                {
+                    throw new ArgumentException("Previous item not found in items array");
+                }
                 items.Remove(prevItem);
                 prevItem.Dispose();
             }
@@ -49,7 +61,10 @@ namespace ZenithEngine
         {
             if (item != null)
             {
-                if (!items.Contains(item)) throw new ArgumentException("Item not found in items array");
+                if (!items.Contains(item)) 
+                {
+                    throw new ArgumentException("Item not found in items array");
+                }
                 items.Remove(item);
                 item.Dispose();
             }
@@ -58,7 +73,7 @@ namespace ZenithEngine
         public void Remove<T>(ref T item) where T : IDisposable
         {
             Remove(item);
-            item = default(T);
+            item = default;
         }
     }
 }
