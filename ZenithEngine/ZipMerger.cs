@@ -99,8 +99,8 @@ namespace ZenithEngine
 
         public static IEnumerable<T> MergeMany(IEnumerable<T>[] t, Func<T, double> getTime)
         {
-            List<IEnumerable<T>> t1 = new List<IEnumerable<T>>(t);
-            List<IEnumerable<T>> t2 = new List<IEnumerable<T>>();
+            List<IEnumerable<T>> t1 = new(t);
+            List<IEnumerable<T>> t2 = new();
 
             while (t1.Count != 1)
             {

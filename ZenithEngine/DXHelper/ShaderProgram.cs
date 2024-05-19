@@ -116,7 +116,7 @@ namespace ZenithEngine.DXHelper
 
         InputElement[] layoutParts;
 
-        List<string> basicPrepend = new List<string>();
+        List<string> basicPrepend = new();
 
         Dictionary<string, string> defines = new();
 
@@ -176,8 +176,10 @@ namespace ZenithEngine.DXHelper
 
             string code = GetPreparedCode();
             Console.WriteLine("[InitShader] Shader Code Length -> " + code.Length);
+#if DEBUG
             //Console.WriteLine(code + "\n");
             Console.WriteLine(string.Join("\n", code.Split('\n').Select((s, i) => $"{i + 1}. {s}").ToArray()));
+#endif
 
             Console.WriteLine($"[InitShader] vertEntry -> {vertEntry}, fragEntry -> {fragEntry}");
 

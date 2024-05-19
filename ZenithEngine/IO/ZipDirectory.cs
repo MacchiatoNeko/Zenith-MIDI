@@ -38,11 +38,7 @@ namespace ZenithEngine.IO
 
         public override int GetHashCode()
         {
-            int hashCode = -501593077;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Path);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Filename);
-            hashCode = hashCode * -1521134295 + Type.GetHashCode();
-            return hashCode;
+            return HashCode.Combine(Path, Filename, Type);
         }
     }
 
@@ -119,7 +115,7 @@ namespace ZenithEngine.IO
         public static DirectoryFolder OpenZrp(string path) =>
             new ZrpDirectory(path);
 
-        protected string FixSlashes(string path) => path.Replace("\\", "/");
+        protected static string FixSlashes(string path) => path.Replace("\\", "/");
 
         public string ReadAllText(string path)
         {
@@ -261,7 +257,7 @@ namespace ZenithEngine.IO
 
             var zrpstream = new MemoryStream();
 
-            using (AesManaged aes = new AesManaged())
+            using (AesManaged aes = new())
             {
                 ICryptoTransform decryptor = aes.CreateDecryptor(key, iv);
                 using (CryptoStream cs = new CryptoStream(encoded, decryptor, CryptoStreamMode.Read))

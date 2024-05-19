@@ -19,13 +19,13 @@ namespace MIDITrailRender
     public partial class AuraSelect : UserControl
     {
         #region PreviewConvert
-        BitmapImage BitmapToImageSource(Bitmap bitmap)
+        static BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
-            using (MemoryStream memory = new MemoryStream())
+            using (MemoryStream memory = new())
             {
                 bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
                 memory.Position = 0;
-                BitmapImage bitmapimage = new BitmapImage();
+                BitmapImage bitmapimage = new();
                 bitmapimage.BeginInit();
                 bitmapimage.StreamSource = memory;
                 bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
@@ -37,7 +37,7 @@ namespace MIDITrailRender
         #endregion
 
         Settings settings;
-        List<Bitmap> images = new List<Bitmap>();
+        List<Bitmap> images = new();
         int selectedIndex = 0;
         public long lastSetTime = 0;
 

@@ -11,7 +11,7 @@ namespace ZenithEngine
             public T item;
         }
 
-        private ListItem root = new ListItem();
+        private ListItem root = new();
         private ListItem last = null;
 
         public T First
@@ -41,7 +41,7 @@ namespace ZenithEngine
 
                 if (ll == null)
                 {
-                    v = default(T);
+                    v = default;
                     _ilist.last = curr;
                     return false;
                 }
@@ -124,7 +124,7 @@ namespace ZenithEngine
 
         public void Add(T item)
         {
-            ListItem li = new ListItem();
+            ListItem li = new();
             li.item = item;
 
             if (root.Next != null && last != null)

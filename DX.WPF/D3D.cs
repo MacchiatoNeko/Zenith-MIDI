@@ -14,14 +14,15 @@ namespace DX.WPF
     {
         class ArgPointer { public DrawEventArgs args = null; }
 
-        [DllImport("ntdll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int NtDelayExecution([MarshalAs(UnmanagedType.I1)] bool alertable, ref Int64 DelayInterval);
+        [LibraryImport("ntdll")]
+        [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+        public static partial int NtDelayExecution([MarshalAs(UnmanagedType.I1)] bool alertable, ref Int64 DelayInterval);
 
-        readonly ArgPointer argsPointer = new ArgPointer();
+        readonly ArgPointer argsPointer = new();
 
         Task renderThread = null;
 
-        List<DateTime> frameTimes = new List<DateTime>();
+        List<DateTime> frameTimes = new();
 
         public int FPSLock { get; set; } = 60;
         public bool SingleThreadedRender
@@ -55,10 +56,10 @@ namespace DX.WPF
                 }
             }
         }
-        Stopwatch frameTimer = new Stopwatch();
+        Stopwatch frameTimer = new();
         double delayExtraDelay = 0;
 
-        Stopwatch renderTimer = new Stopwatch();
+        Stopwatch renderTimer = new();
 
         public D3D()
         {
@@ -194,15 +195,14 @@ namespace DX.WPF
                                 }
                             });
                         }
-                        catch (OperationCanceledException e)
-                        { }
+                        catch (OperationCanceledException) { }
 
                         if (FPSLock != 0)
                         {
                             var desired = 10000000 / FPSLock;
                             var elapsed = frameTimer.ElapsedTicks;
                             long remaining = -(desired + (long)delayExtraDelay - elapsed);
-                            Stopwatch s = new Stopwatch();
+                            Stopwatch s = new();
                             s.Start();
                             if (remaining < 0)
                             {
@@ -215,8 +215,7 @@ namespace DX.WPF
                         frameTimer.Reset();
                     }
                 }
-                catch (Exception e)
-                { }
+                catch (Exception) { }
             });
         }
 

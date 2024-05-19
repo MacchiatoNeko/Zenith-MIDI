@@ -66,9 +66,13 @@ namespace Zenith
 
         protected override void RunInternal(Action<PreviewState> renderFrame, PreviewState state)
         {
-            Window = new ManagedRenderWindow(Device, 1280, 720);
-            Window.Text = "Zenith Preview";
-            Window.Icon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
+            int width = (int)((int)System.Windows.SystemParameters.PrimaryScreenWidth / 1.25);
+            int height = (int)((int)System.Windows.SystemParameters.PrimaryScreenHeight / 1.25);
+            Window = new ManagedRenderWindow(Device, width, height)
+            {
+                Text = "Zenith Preview",
+                Icon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location)
+            };
             Window.KeyDown += Window_KeyDown;
             RenderLoop.Run(Window, () =>
             {
@@ -81,7 +85,7 @@ namespace Zenith
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Window != null && e.KeyCode == Keys.Enter)
+            if (Window != null && e.KeyCode == Keys.F10)
             {
                 Window.Fullscreen = !Window.Fullscreen;
             }
@@ -95,7 +99,7 @@ namespace Zenith
 
     public class ElementPreview : PreviewBase
     {
-        struct DXRenderTarget : IRenderSurface
+        readonly struct DXRenderTarget : IRenderSurface
         {
             public DXRenderTarget(D3D11 dX)
             {
@@ -132,8 +136,10 @@ namespace Zenith
         protected override void RunInternal(Action<PreviewState> renderFrame, PreviewState state)
         {
             var scene = new EventScene<D3D11>();
-            var dx = new D3D11(Device.D3Device);
-            dx.FPSLock = 0;
+            var dx = new D3D11(Device.D3Device)
+            {
+                FPSLock = 0
+            };
 
             bool stopped = false;
 

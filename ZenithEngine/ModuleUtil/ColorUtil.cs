@@ -5,7 +5,7 @@ namespace ZenithEngine.ModuleUtil
 {
     public static class ColorUtil
     {
-        public static Color4 ToDX(this System.Drawing.Color color) => new Color4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
+        public static Color4 ToDX(this System.Drawing.Color color) => new(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
         public static System.Drawing.Color ToDrawing(this Color4 color) => System.Drawing.Color.FromArgb(
             (int)(color.Alpha * 255),
             (int)(color.Red * 255),

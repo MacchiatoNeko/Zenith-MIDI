@@ -12,8 +12,8 @@ namespace Zenith
             try
             {
 #endif
-                Console.Title = ("Zenith " + InstallSettings.VersionName);
-                Application app = new Application();
+                Console.Title = ("Zenith " + InstallSettings.VersionName + " Alpha-state");
+                Application app = new();
                 var window = new ZenithWindow();
                 //window.Loaded += (s, e) =>
                 //{

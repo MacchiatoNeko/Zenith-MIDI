@@ -17,7 +17,7 @@ namespace ZenithEngine.DXHelper
     {
         CompositeRenderSurface staging;
 
-        Initiator init = new Initiator();
+        Initiator init = new();
 
         Texture2D stagingTexture;
         Compositor composite;

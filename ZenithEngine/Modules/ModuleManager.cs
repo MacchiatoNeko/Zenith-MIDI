@@ -20,8 +20,8 @@ namespace ZenithEngine.Modules
     {
         public IModuleRender CurrentModule { get; private set; } = null;
 
-        Queue<IModuleRender> initQueue = new Queue<IModuleRender>();
-        Queue<IModuleRender> disposeQueue = new Queue<IModuleRender>();
+        Queue<IModuleRender> initQueue = new();
+        Queue<IModuleRender> disposeQueue = new();
 
         MidiPlayback currentMidi = null;
         RenderStatus currentStatus = null;
@@ -39,13 +39,13 @@ namespace ZenithEngine.Modules
         ShaderProgram alphaFix;
         Compositor composite;
 
-        Initiator init = new Initiator();
+        Initiator init = new();
 
         RasterizerStateKeeper raster;
 
         DeviceGroup device = null;
 
-        object queueLock = new object();
+        object queueLock = new();
 
         public ModuleManager()
         {
@@ -210,6 +210,7 @@ namespace ZenithEngine.Modules
         public static IModuleRender LoadModule(Assembly dll)
         {
             string name = dll.FullName;
+            Console.WriteLine("Loading Module -> " + name);
             try
             {
                 bool hasClass = false;
@@ -219,6 +220,7 @@ namespace ZenithEngine.Modules
                     {
                         hasClass = true;
                         var instance = (IModuleRender)Activator.CreateInstance(type);
+                        Console.WriteLine("Loaded Module -> " + name);
                         return instance;
                     }
                 }
