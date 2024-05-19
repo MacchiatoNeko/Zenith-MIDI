@@ -88,14 +88,14 @@ namespace ZenithEngine.Modules
 
         public JObject SerializeModule()
         {
-            var contianer = CurrentModule?.SettingsControl as ISerializableContainer;
+            var contianer = CurrentModule?.SettingsControl;
             if (contianer == null) return new JObject();
             else return contianer.Serialize();
         }
 
         public void ParseModule(JObject data)
         {
-            var contianer = CurrentModule?.SettingsControl as ISerializableContainer;
+            var contianer = CurrentModule?.SettingsControl;
             if (contianer == null) return;
             else contianer.Parse(data);
         }
