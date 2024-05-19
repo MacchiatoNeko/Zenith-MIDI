@@ -12,7 +12,7 @@ namespace Zenith
             try
             {
 #endif
-                Console.Title = "Zenith";
+                Console.Title = ("Zenith " + InstallSettings.VersionName);
                 Application app = new Application();
                 var window = new ZenithWindow();
 
