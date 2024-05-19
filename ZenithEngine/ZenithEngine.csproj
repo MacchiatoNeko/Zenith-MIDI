@@ -11,7 +11,6 @@
   </PropertyGroup>
 	
   <ItemGroup>
-	<Reference Include="PresentationFramework.Aero2" />
     <Resource Include="UI\Fonts\Inter-Light.otf" />
     <Resource Include="UI\Fonts\Inter-Medium.otf" />
     <Resource Include="UI\Fonts\Metropolis-Light.otf" />
@@ -54,7 +53,6 @@
     <EmbeddedResource Include="DXHelper\Presets\Shaders\noise.fx" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CjClutter.ObjLoader" Version="1.0.0" />
     <PackageReference Include="Fody" Version="6.8.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
