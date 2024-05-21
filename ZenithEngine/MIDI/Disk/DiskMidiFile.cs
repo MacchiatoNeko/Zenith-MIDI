@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -62,11 +63,10 @@ namespace ZenithEngine.MIDI.Disk
         Stream MidiFileReader;
         DiskReadProvider FileReadProvider;
         public ushort Format { get; private set; }
-
         public IMidiTrack[] Tracks { get; private set; }
-
         int TrackCountHeader { get; set; } = 0;
 
+        public int loaderThreadMultiplier = 4; // TODO: Make this customizable.
         public Tempo[] TempoEvents { get; private set; }
         public TimeSignature[] TimeSignatureEvents { get; private set; }
 
@@ -77,6 +77,8 @@ namespace ZenithEngine.MIDI.Disk
         public DiskMidiFile(string filename, long? maxBufferMemory = null) : this(filename, null, new CancellationTokenSource().Token, maxBufferMemory) { }
         public DiskMidiFile(string filename, IProgress<MidiParseProgress> progress, CancellationToken cancel, long? maxBufferMemory = null)
         {
+            Stopwatch stopwatch = new();
+            stopwatch.Start();
             MidiFileReader = new StreamReader(filename).BaseStream;
             ParseHeaderChunk();
             cancel.ThrowIfCancellationRequested();
@@ -86,18 +88,15 @@ namespace ZenithEngine.MIDI.Disk
                 progress.Report(new MidiParseProgress(TrackCount));
                 cancel.ThrowIfCancellationRequested();
             }
-
             Tracks = new IMidiTrack[TrackCount];
-
             cancel.ThrowIfCancellationRequested();
-
             MaxBufferMemory = maxBufferMemory ?? 8L * 1024 * 1024 * 1024;
-
-            Console.WriteLine("Loading tracks into memory, biggest tracks first.");
-            Console.WriteLine("Please expect this to start slow, especially on bigger midis.");
+            Console.WriteLine($"CPU Threads: {Environment.ProcessorCount}\nLoader Thread Multiplier: {loaderThreadMultiplier}\nLoader Threads: {Environment.ProcessorCount * loaderThreadMultiplier}\nStarting parser...");
             LoadAndParseAll(progress, cancel);
-            Console.WriteLine("Loaded!");
-            Console.WriteLine("Note count: " + NoteCount);
+            Console.WriteLine("Parsed!\nNote count: " + NoteCount);
+            stopwatch.Stop();
+            TimeSpan elapsedTime = stopwatch.Elapsed;
+            Console.WriteLine("Loading Time: " + elapsedTime.TotalMilliseconds + " milliseconds");
         }
 
         void AssertText(string text)
@@ -135,7 +134,7 @@ namespace ZenithEngine.MIDI.Disk
             Format = ReadInt16();
             TrackCountHeader = ReadInt16();
             PPQ = ReadInt16();
-            if (Format == 2) throw new Exception("Midi type 2 not supported");
+            if (Format == 2) throw new Exception("Midi type 2 is not supported");
         }
 
         void ParseTrackChunk()
@@ -145,7 +144,7 @@ namespace ZenithEngine.MIDI.Disk
             TrackPositions.Add(new TrackPos(MidiFileReader.Position, length));
             MidiFileReader.Position += length;
             TrackCount++;
-            Console.WriteLine("Track " + TrackCount + ", Size " + length);
+            Console.WriteLine("Track: " + TrackCount + ", Size: " + length);
         }
 
         void LoadAndParseAll(IProgress<MidiParseProgress> progress, CancellationToken cancel)
@@ -156,9 +155,9 @@ namespace ZenithEngine.MIDI.Disk
             for (int i = 0; i < trackOrder.Length; i++) trackOrder[i] = i;
             Array.Sort(TrackPositions.Select(t => t.length).ToArray(), trackOrder);
             trackOrder = trackOrder.Reverse().ToArray();
-            object l = new object();
+            object l = new();
             cancel.ThrowIfCancellationRequested();
-            ParallelFor(0, Tracks.Length, Environment.ProcessorCount * 3, cancel, (_i) =>
+            ParallelFor(0, Tracks.Length, Environment.ProcessorCount * loaderThreadMultiplier, cancel, (_i) =>
             {
                 cancel.ThrowIfCancellationRequested();
                 int i = trackOrder[_i];
@@ -170,14 +169,13 @@ namespace ZenithEngine.MIDI.Disk
                 cancel.ThrowIfCancellationRequested();
                 lock (l)
                 {
-                    Console.WriteLine("Loaded track " + p++ + "/" + Tracks.Length);
+                    Console.WriteLine("Loaded track: " + p++ + "/" + Tracks.Length);
                     progress.Report(new MidiParseProgress(p, TrackCount));
                 }
             });
             cancel.ThrowIfCancellationRequested();
             TickLength = Tracks.Select(t => t.LastNoteTick).Max();
-            Console.WriteLine("Processing Tempos");
-
+            Console.WriteLine("Processing Tempos...");
             var temposMerge = ZipMerger<Tempo>.MergeMany(Tracks.Select(t => t.TempoEvents).ToArray(), e => e.pos).ToArray();
             if (temposMerge.Length == 0 || temposMerge.First().pos > 0)
             {
@@ -191,6 +189,7 @@ namespace ZenithEngine.MIDI.Disk
                 timesigMerge = new[] { new TimeSignature(0, 4, 4) }.Concat(timesigMerge).ToArray();
             }
             TimeSignatureEvents = timesigMerge;
+            Console.WriteLine("Done processing Tempos.");
 
             double time = 0;
             long ticks = TickLength;
@@ -206,13 +205,11 @@ namespace ZenithEngine.MIDI.Disk
                 multiplier = ((double)t.rawTempo / PPQ) / 1000000;
             }
             time += ticks * multiplier;
-
             SecondsLength = time;
-
             GC.Collect();
         }
 
-        void ParallelFor(int from, int to, int threads, CancellationToken cancel, Action<int> func)
+        private static void ParallelFor(int from, int to, int threads, CancellationToken cancel, Action<int> func)
         {
             Dictionary<int, Task> tasks = new Dictionary<int, Task>();
             BlockingCollection<int> completed = new BlockingCollection<int>();

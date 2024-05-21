@@ -28,7 +28,7 @@ namespace ZenithEngine.MIDI.Disk
 
         int remainingTracks = 0;
 
-        object parseLock = new object();
+        object parseLock = new();
 
         protected long lastNoteCount = 0;
         public override long LastIterateNoteCount => lastNoteCount;
@@ -36,16 +36,15 @@ namespace ZenithEngine.MIDI.Disk
         public DiskMidiPlayback(DiskMidiFile file, DiskReadProvider reader, double startDelay, bool timeBased, long? maxAllocation = null) : base(file, file.TempoEvents[0].rawTempo, timeBased)
         {
             midi = file;
-
             tracks = new DiskMidiTrack[file.TrackCount];
 
-            var maxSize = 10000000;
+            int maxSize = 10000000;
 
             if (maxAllocation != null)
             {
                 while (maxSize > 100000)
                 {
-                    var sum = file.TrackPositions
+                    long sum = file.TrackPositions
                         .Select(t => (long)t.length)
                         .Select(l => l <= maxSize ? l : maxSize * 2)
                         .Sum();
@@ -70,26 +69,54 @@ namespace ZenithEngine.MIDI.Disk
 
         public override bool ParseUpTo(double time)
         {
+            if (ParserPosition > time || stopped) // Exit early if already past the desired time or if playback is stopped
+            {
+                return false;
+            }
+
             lock (parseLock)
             {
-                for (; ParserPosition <= time + 1 && !stopped; TicksParsed++)
+                double timeLimit = time + 1;
+                double tickIncrement = 1 * ParserTempoTickMultiplier;
+
+                while (ParserPosition <= timeLimit && !stopped)
                 {
-                    SecondsParsed += 1 * ParserTempoTickMultiplier;
-                    int ut = 0;
-                    for (int trk = 0; trk < Midi.TrackCount; trk++)
+                    TicksParsed++;
+                    SecondsParsed += tickIncrement;
+                    int activeTracks = 0;
+                    foreach (var track in tracks)
                     {
-                        var t = Tracks[trk];
-                        if (!t.Ended)
+                        if (!track.Ended)
                         {
-                            ut++;
-                            t.Step(TicksParsed);
+                            activeTracks++;
+                            track.Step(TicksParsed);
                         }
                     }
-                    remainingTracks = ut;
+
+                    /*
+                    Parallel.ForEach(tracks, track =>
+                    {
+                        if (!track.Ended)
+                        {
+                            track.Step(TicksParsed);
+                        }
+                    });
+                    */
+
+                    remainingTracks = activeTracks;
+
+                    if (remainingTracks == 0) // Exit early if no active tracks are left
+                    {
+                        return false;
+                    }
                 }
-                foreach (var t in Tracks)
+
+                foreach (var track in tracks) // Check if any tracks are still active
                 {
-                    if (!t.Ended) return true;
+                    if (!track.Ended)
+                    {
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -103,8 +130,8 @@ namespace ZenithEngine.MIDI.Disk
             if (offset < 0) return;
 
             var multiplier = ((double)Tempo.rawTempo / Midi.PPQ) / 1000000;
-            if (true)
-            {
+            //if (true)
+            //{
                 while (
                     tempoEventId < midi.TempoEvents.Length &&
                     TimeTicksFractional + offset / multiplier > midi.TempoEvents[tempoEventId].pos
@@ -122,9 +149,9 @@ namespace ZenithEngine.MIDI.Disk
                 }
                 TimeTicksFractional += offset / multiplier;
                 TimeSeconds += offset;
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 // this part isn't enabled because it steps by ticks instead of seconds.
                 // I made this function use seconds instead of ticks, but don't want to delete
                 // this code.
@@ -144,16 +171,14 @@ namespace ZenithEngine.MIDI.Disk
                 //}
                 //TimeTicksFractional += offset;
                 //TimeSeconds += offset / multiplier;
-            }
+            //}
 
             while (timesigEventId != midi.TimeSignatureEvents.Length &&
                 midi.TimeSignatureEvents[timesigEventId].Position < TimeTicksFractional)
             {
                 TimeSignature = midi.TimeSignatureEvents[timesigEventId++];
             }
-
             if (SecondsParsed < TimeSeconds) ParseUpTo(PlayerPosition);
-
             FlushColorEvents();
         }
 
@@ -213,14 +238,12 @@ namespace ZenithEngine.MIDI.Disk
             if (disposed) return;
             ForceStop();
             disposed = true;
-
             NotesKeyed = null;
             NotesSingle = null;
             ColorChanges.Unlink();
             PlaybackEvents.Unlink();
             ColorChanges = null;
             PlaybackEvents = null;
-
             foreach (var t in tracks) t.Dispose();
         }
     }
