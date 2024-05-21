@@ -99,31 +99,29 @@ namespace ZenithEngine.MIDI.Audio
             return true;
         }
 
-        [LibraryImport(DllName, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool ReturnKDMAPIVer(out int Major, out int Minor, out int Build, out int Revision);
+        [DllImport(DllName, SetLastError = true)]
+        public static extern bool ReturnKDMAPIVer(out int Major, out int Minor, out int Build, out int Revision);
 
-        [LibraryImport(DllName, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool IsKDMAPIAvailable();
+        [DllImport(DllName, SetLastError = true)]
+        public static extern bool IsKDMAPIAvailable();
 
-        [LibraryImport(DllName, SetLastError = true)]
-        public static partial int InitializeKDMAPIStream();
+        [DllImport(DllName, SetLastError = true)]
+        public static extern int InitializeKDMAPIStream();
 
-        [LibraryImport(DllName, SetLastError = true)]
-        public static partial int TerminateKDMAPIStream();
+        [DllImport(DllName, SetLastError = true)]
+        public static extern int TerminateKDMAPIStream();
 
-        [LibraryImport(DllName, SetLastError = true)]
-        public static partial void ResetKDMAPIStream();
+        [DllImport(DllName, SetLastError = true)]
+        public static extern void ResetKDMAPIStream();
 
-        [LibraryImport(DllName, SetLastError = true)]
-        public static partial uint SendCustomEvent(uint eventtype, uint chan, uint param);
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint SendCustomEvent(uint eventtype, uint chan, uint param);
 
-        [LibraryImport(DllName, SetLastError = true)]
-        public static partial uint SendDirectData(uint dwMsg);
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint SendDirectData(uint dwMsg);
 
-        [LibraryImport(DllName, SetLastError = true)]
-        public static partial uint SendDirectDataNoBuf(uint dwMsg);
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint SendDirectDataNoBuf(uint dwMsg);
 
         [DllImport(DllName, SetLastError = true)]
         public static extern uint SendDirectLongData(ref MIDIHDR IIMidiHdr);
