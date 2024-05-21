@@ -27,6 +27,7 @@ namespace Zenith
                 //        window.StartPipeline(false);
                 //    }
                 //};
+                //ZenithEngine.GCMonitor.Monitor _ = new();
                 app.Run(window);
 #if !DEBUG
             }
