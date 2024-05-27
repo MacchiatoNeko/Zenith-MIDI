@@ -9,55 +9,6 @@ using System.Threading.Tasks;
 
 namespace ZenithEngine.MIDI.Disk
 {
-    struct TrackPos
-    {
-        public long start;
-        public uint length;
-
-        public TrackPos(long start, uint length)
-        {
-            this.start = start;
-            this.length = length;
-        }
-    }
-
-    public enum MidiParseStep
-    {
-        Discover,
-        Parse,
-    }
-
-    //public enum MidiParseErrorType
-    //{
-
-    //}
-
-    //public class MidiError
-    //{
-
-    //}
-
-    public struct MidiParseProgress
-    {
-        public int Parsed { get; }
-        public int Discovered { get; }
-        public MidiParseStep Step { get; }
-
-        public MidiParseProgress(int parsed, int discovered)
-        {
-            Step = MidiParseStep.Parse;
-            Parsed = parsed;
-            Discovered = discovered;
-        }
-
-        public MidiParseProgress(int discovered)
-        {
-            Step = MidiParseStep.Discover;
-            Parsed = 0;
-            Discovered = discovered;
-        }
-    }
-
     public class DiskMidiFile : MidiFile
     {
         Stream MidiFileReader;

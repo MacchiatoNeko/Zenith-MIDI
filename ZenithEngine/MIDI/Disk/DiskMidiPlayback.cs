@@ -17,19 +17,13 @@ namespace ZenithEngine.MIDI.Disk
         public long TicksParsed { get; internal set; }
         public double SecondsParsed { get; internal set; }
 
-
         DiskMidiFile midi;
         public override MidiFile Midi => midi;
-
         DiskMidiTrack[] tracks;
         public override IMidiPlaybackTrack[] Tracks => tracks;
-
         bool disposed = false;
-
         int remainingTracks = 0;
-
-        object parseLock = new();
-
+        readonly object parseLock = new();
         protected long lastNoteCount = 0;
         public override long LastIterateNoteCount => lastNoteCount;
 
@@ -93,16 +87,6 @@ namespace ZenithEngine.MIDI.Disk
                         }
                     }
 
-                    /*
-                    Parallel.ForEach(tracks, track =>
-                    {
-                        if (!track.Ended)
-                        {
-                            track.Step(TicksParsed);
-                        }
-                    });
-                    */
-
                     remainingTracks = activeTracks;
 
                     if (remainingTracks == 0) // Exit early if no active tracks are left
@@ -130,48 +114,23 @@ namespace ZenithEngine.MIDI.Disk
             if (offset < 0) return;
 
             var multiplier = ((double)Tempo.rawTempo / Midi.PPQ) / 1000000;
-            //if (true)
-            //{
-                while (
-                    tempoEventId < midi.TempoEvents.Length &&
-                    TimeTicksFractional + offset / multiplier > midi.TempoEvents[tempoEventId].pos
-                )
-                {
-                    Tempo = midi.TempoEvents[tempoEventId];
-                    tempoEventId++;
-                    var diff = Tempo.pos - TimeTicksFractional;
-                    if (diff * multiplier > offset || diff < 0)
-                    { }
-                    TimeTicksFractional += diff;
-                    offset -= diff * multiplier;
-                    TimeSeconds += diff * multiplier;
-                    multiplier = ((double)Tempo.rawTempo / Midi.PPQ) / 1000000;
-                }
-                TimeTicksFractional += offset / multiplier;
-                TimeSeconds += offset;
-            //}
-            //else
-            //{
-                // this part isn't enabled because it steps by ticks instead of seconds.
-                // I made this function use seconds instead of ticks, but don't want to delete
-                // this code.
-
-                //while (
-                //    tempoEventId < midi.TempoEvents.Length &&
-                //    TimeTicksFractional + offset > midi.TempoEvents[tempoEventId].pos
-                //)
-                //{
-                //    Tempo = midi.TempoEvents[tempoEventId];
-                //    tempoEventId++;
-                //    var diff = TimeTicksFractional - Tempo.pos;
-                //    TimeTicksFractional += diff;
-                //    offset -= diff;
-                //    TimeSeconds += diff / multiplier;
-                //    multiplier = ((double)Tempo.rawTempo / Midi.PPQ) / 1000000;
-                //}
-                //TimeTicksFractional += offset;
-                //TimeSeconds += offset / multiplier;
-            //}
+            while (
+                tempoEventId < midi.TempoEvents.Length &&
+                TimeTicksFractional + offset / multiplier > midi.TempoEvents[tempoEventId].pos
+            )
+            {
+                Tempo = midi.TempoEvents[tempoEventId];
+                tempoEventId++;
+                var diff = Tempo.pos - TimeTicksFractional;
+                if (diff * multiplier > offset || diff < 0)
+                { }
+                TimeTicksFractional += diff;
+                offset -= diff * multiplier;
+                TimeSeconds += diff * multiplier;
+                multiplier = ((double)Tempo.rawTempo / Midi.PPQ) / 1000000;
+            }
+            TimeTicksFractional += offset / multiplier;
+            TimeSeconds += offset;
 
             while (timesigEventId != midi.TimeSignatureEvents.Length &&
                 midi.TimeSignatureEvents[timesigEventId].Position < TimeTicksFractional)
@@ -196,14 +155,20 @@ namespace ZenithEngine.MIDI.Disk
             CheckEnded();
         }
 
-        public override IEnumerable<Note> IterateNotes() =>
-            SingleNoteListFromSource(() => IterateNotesList(NotesSingle));
+        public override IEnumerable<Note> IterateNotes()
+        {
+            return SingleNoteListFromSource(() => IterateNotesList(NotesSingle));
+        }
 
-        public override IEnumerable<Note> IterateNotes(double bottomCutoffOffset, double topCutoffOffset) =>
-            SingleNoteListFromSource(() => IterateNotesListWithCutoffs(NotesSingle, bottomCutoffOffset, topCutoffOffset));
+        public override IEnumerable<Note> IterateNotes(double bottomCutoffOffset, double topCutoffOffset)
+        {
+            return SingleNoteListFromSource(() => IterateNotesListWithCutoffs(NotesSingle, bottomCutoffOffset, topCutoffOffset));
+        }
 
-        public override IEnumerable<Note> IterateNotesCustomDelete() =>
-            SingleNoteListFromSource(() => IterateNotesListWithCustomDelete(NotesSingle));
+        public override IEnumerable<Note> IterateNotesCustomDelete()
+        {
+            return SingleNoteListFromSource(() => IterateNotesListWithCustomDelete(NotesSingle));
+        }
 
         IEnumerable<Note>[] KeyedNoteListFromSource(Func<int, IEnumerable<Note>> getNotes)
         {
@@ -219,14 +184,20 @@ namespace ZenithEngine.MIDI.Disk
                 });
         }
 
-        public override IEnumerable<Note>[] IterateNotesKeyed() =>
-            KeyedNoteListFromSource(key => IterateNotesList(NotesKeyed[key]));
+        public override IEnumerable<Note>[] IterateNotesKeyed()
+        {
+            return KeyedNoteListFromSource(key => IterateNotesList(NotesKeyed[key]));
+        }
 
-        public override IEnumerable<Note>[] IterateNotesKeyed(double bottomCutoffOffset, double topCutoffOffset) =>
-            KeyedNoteListFromSource(key => IterateNotesListWithCutoffs(NotesKeyed[key], bottomCutoffOffset, topCutoffOffset));
+        public override IEnumerable<Note>[] IterateNotesKeyed(double bottomCutoffOffset, double topCutoffOffset)
+        {
+            return KeyedNoteListFromSource(key => IterateNotesListWithCutoffs(NotesKeyed[key], bottomCutoffOffset, topCutoffOffset));
+        }
 
-        public override IEnumerable<Note>[] IterateNotesCustomDeleteKeyed() =>
-            KeyedNoteListFromSource(key => IterateNotesListWithCustomDelete(NotesKeyed[key]));
+        public override IEnumerable<Note>[] IterateNotesCustomDeleteKeyed()
+        {
+            return KeyedNoteListFromSource(key => IterateNotesListWithCustomDelete(NotesKeyed[key]));
+        }
 
         void CheckEnded()
         {
