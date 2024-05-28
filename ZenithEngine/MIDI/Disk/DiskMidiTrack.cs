@@ -90,7 +90,6 @@ namespace ZenithEngine.MIDI.Disk
             Mode = mode;
             this.reader = reader;
             ID = id;
-
             if (initialTrackColors == null)
             {
                 InitialTrackColors = new NoteColor[16];
@@ -114,18 +113,9 @@ namespace ZenithEngine.MIDI.Disk
             return track;
         }
 
-        public static DiskMidiTrack NewParserTrack(
-            int id,
-            BufferByteReader reader)
-        {
-            return NewParserTrack(id, reader, null, int.MaxValue);
-        }
+        public static DiskMidiTrack NewParserTrack(int id, BufferByteReader reader) => NewParserTrack(id, reader, null, int.MaxValue);
 
-        public static DiskMidiTrack NewPlayerTrack(
-            int id,
-            BufferByteReader reader,
-            MidiPlayback playback,
-            NoteColor[] initialTrackColors = null)
+        public static DiskMidiTrack NewPlayerTrack(int id, BufferByteReader reader, MidiPlayback playback, NoteColor[] initialTrackColors = null)
         {
             var track = new DiskMidiTrack(id, reader, TrackMode.Playback, initialTrackColors);
             track.MidiPlayback = playback;
@@ -152,7 +142,6 @@ namespace ZenithEngine.MIDI.Disk
                     progress?.Report(new DiskTrackParseProgress(this, reader.Location / (double)reader.Length));
                 }
             }
-
             progress?.Report(new DiskTrackParseProgress(this, 1));
         }
 
@@ -524,8 +513,6 @@ namespace ZenithEngine.MIDI.Disk
             {
                 EndTrack();
             }
-            catch
-            { }
         }
 
         bool disposed = false;

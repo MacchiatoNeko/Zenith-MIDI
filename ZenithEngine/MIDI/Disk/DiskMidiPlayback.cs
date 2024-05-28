@@ -31,8 +31,7 @@ namespace ZenithEngine.MIDI.Disk
         {
             midi = file;
             tracks = new DiskMidiTrack[file.TrackCount];
-
-            int maxSize = 10000000;
+            int maxSize = 1024 * 8;
 
             if (maxAllocation != null)
             {
@@ -78,15 +77,21 @@ namespace ZenithEngine.MIDI.Disk
                     TicksParsed++;
                     SecondsParsed += tickIncrement;
                     int activeTracks = 0;
-                    foreach (var track in tracks)
+                    unsafe
                     {
-                        if (!track.Ended)
+                        fixed (DiskMidiTrack* trackPtr = &tracks[0])
                         {
-                            activeTracks++;
-                            track.Step(TicksParsed);
+                            for (int i = 0; i < tracks.Length; i++)
+                            {
+                                var track = trackPtr[i];
+                                if (!track.Ended)
+                                {
+                                    activeTracks++;
+                                    track.Step(TicksParsed);
+                                }
+                            }
                         }
                     }
-
                     remainingTracks = activeTracks;
 
                     if (remainingTracks == 0) // Exit early if no active tracks are left
@@ -94,12 +99,17 @@ namespace ZenithEngine.MIDI.Disk
                         return false;
                     }
                 }
-
-                foreach (var track in tracks) // Check if any tracks are still active
+                unsafe
                 {
-                    if (!track.Ended)
+                    fixed (DiskMidiTrack* trackPtr = &tracks[0])
                     {
-                        return true;
+                        foreach (var track in tracks) // Check if any tracks are still active
+                        {
+                            if (!track.Ended)
+                            {
+                                return true;
+                            }
+                        }
                     }
                 }
                 return false;
@@ -157,7 +167,16 @@ namespace ZenithEngine.MIDI.Disk
 
         public override IEnumerable<Note> IterateNotes()
         {
-            return SingleNoteListFromSource(() => IterateNotesList(NotesSingle));
+            return SingleNoteListFromSource(() =>
+            {
+                unsafe
+                {
+                    fixed (DiskMidiTrack* trackPtr = &tracks[0])
+                    {
+                        return IterateNotesList(NotesSingle);
+                    }
+                }
+            });
         }
 
         public override IEnumerable<Note> IterateNotes(double bottomCutoffOffset, double topCutoffOffset)
@@ -215,7 +234,17 @@ namespace ZenithEngine.MIDI.Disk
             PlaybackEvents.Unlink();
             ColorChanges = null;
             PlaybackEvents = null;
-            foreach (var t in tracks) t.Dispose();
+            unsafe
+            {
+                fixed (DiskMidiTrack* trackPtr = &tracks[0])
+                {
+                    for (int i = 0; i < tracks.Length; i++)
+                    {
+                        var t = trackPtr[i];
+                        t.Dispose();
+                    }
+                }
+            }
         }
     }
 }
