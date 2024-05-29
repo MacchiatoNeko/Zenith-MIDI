@@ -1,10 +1,12 @@
 ﻿using SharpDX;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace ZenithEngine.MIDI.Disk
 {
-    public struct DiskTrackParseProgress
+    [StructLayout(LayoutKind.Sequential)]
+    public readonly struct DiskTrackParseProgress
     {
         public DiskTrackParseProgress(DiskMidiTrack track, double progress)
         {
@@ -207,8 +209,7 @@ namespace ZenithEngine.MIDI.Disk
                 foreach (var un in unendedNotes)
                 {
                     var iter = un.Iterate();
-                    Note n;
-                    while (iter.MoveNext(out n))
+                    while (iter.MoveNext(out Note n))
                     {
                         n.End = ParseTimeTicks;
                         n.HasEnded = true;
@@ -296,13 +297,15 @@ namespace ZenithEngine.MIDI.Disk
                     else
                     {
                         if (vel > 10) sendEv();
-                        Note n = new Note();
-                        n.Start = time;
-                        n.Key = note;
-                        n.Color = TrackColors[channel];
-                        n.Channel = channel;
-                        n.Vel = vel;
-                        n.Track = ID;
+                        Note n = new()
+                        {
+                            Start = time,
+                            Key = note,
+                            Color = TrackColors[channel],
+                            Channel = channel,
+                            Vel = vel,
+                            Track = ID
+                        };
                         unendedNotes[note << 4 | channel].Add(n);
 
                         if (MidiPlayback.NotesKeysSeparated)
@@ -453,7 +456,7 @@ namespace ZenithEngine.MIDI.Disk
                                 {
                                     if (data[2] < 0x10 || data[2] == 0x7F)
                                     {
-                                        var c = new ColorChange(ParseTimeSeconds, this, data[2], col1, col2);
+                                        ColorChange c = new(ParseTimeSeconds, this, data[2], col1, col2);
                                         MidiPlayback.ColorChanges.Add(c);
                                     }
                                 }

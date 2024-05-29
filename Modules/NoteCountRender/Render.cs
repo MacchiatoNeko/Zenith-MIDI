@@ -226,17 +226,24 @@ namespace NoteCountRender
 
             Midi.CheckParseDistance(0);
             var time = Midi.PlayerPosition;
-            foreach (var n in Midi.IterateNotesCustomDelete())
+            foreach (Note n in Midi.IterateNotesCustomDelete())
             {
-                if (n.Start > time) continue;
+                if (n.Start > time)
+                {
+                    continue;
+                }
                 polyphony++;
                 if (n.Meta == null)
                 {
                     notesHit++;
-                    n.Meta = true;
+                    //n.Meta = true;
                 }
-                if (n.HasEnded && n.End < time) n.Delete = true;
+                if (n.HasEnded && n.End < time)
+                {
+                    n.Delete = true;
+                }
             }
+
             countedNotes += notesHit;
 
             var stime = Midi.PlayerPositionSeconds;

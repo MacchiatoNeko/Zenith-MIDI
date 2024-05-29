@@ -51,7 +51,7 @@ namespace ZenithEngine.ModuleUtil
         {
             void RenderKeyArray(IEnumerable<int> keys)
             {
-                object l = new object();
+                object l = new();
 
                 void renderKeyWrapper(int key)
                 {
@@ -77,7 +77,6 @@ namespace ZenithEngine.ModuleUtil
 
                 Parallel.ForEach(keys, new ParallelOptions() { MaxDegreeOfParallelism = threads }, renderKeyWrapper);
             }
-
             PickStreams(RenderKeyArray, firstKey, lastKey, blackKeysOnTop);
         }
 
@@ -86,7 +85,7 @@ namespace ZenithEngine.ModuleUtil
         {
             void RenderKeyArray(IEnumerable<int> keys)
             {
-                object l = new object();
+                object l = new();
 
                 void renderKeyWrapper(int key)
                 {

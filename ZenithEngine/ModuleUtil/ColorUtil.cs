@@ -35,7 +35,7 @@ namespace ZenithEngine.ModuleUtil
             var x = c * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
-            if (h >= 0.0f && h < 1.0f)
+            if (h >= 0.0f && h < 1.0f) // TODO: Switch
             {
                 r = c;
                 g = x;

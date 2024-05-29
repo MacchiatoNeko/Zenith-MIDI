@@ -25,9 +25,7 @@ namespace ZenithEngine.Modules
             Init(device);
             Midi = midi;
             Status = status;
-
             init.Init(device);
-
             ReloadTrackColors();
         }
 

@@ -138,11 +138,10 @@ namespace ZenithEngine.MIDI
 
         public void ClearNoteMeta()
         {
-            void ClearStream(IEnumerable<Note> notes)
+            static void ClearStream(IEnumerable<Note> notes)
             {
                 foreach (var n in notes) n.Meta = null;
             }
-
             if (NotesKeyed != null)
             {
                 Parallel.ForEach(NotesKeyed, k => ClearStream(k));
@@ -173,7 +172,8 @@ namespace ZenithEngine.MIDI
         {
             ParseUpTo(topCutoffOffset);
             var iter = notes.Iterate();
-            for (Note n = null; iter.MoveNext(out n);)
+            Note n;
+            while (iter.MoveNext(out n))
             {
                 if (stopped) break;
                 if (n.End < bottomCutoffOffset && n.HasEnded)
@@ -187,10 +187,12 @@ namespace ZenithEngine.MIDI
             }
         }
 
+
         protected IEnumerable<Note> IterateNotesListWithCustomDelete(FastList<Note> notes)
         {
             var iter = notes.Iterate();
-            for (Note n = null; iter.MoveNext(out n);)
+            Note n;
+            while (iter.MoveNext(out n))
             {
                 if (n.Delete)
                 {

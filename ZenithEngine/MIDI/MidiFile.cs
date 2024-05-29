@@ -2,7 +2,6 @@
 
 namespace ZenithEngine.MIDI
 {
-
     public abstract class MidiFile : IDisposable
     {
         public ushort PPQ { get; protected set; }

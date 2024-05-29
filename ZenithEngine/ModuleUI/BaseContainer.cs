@@ -46,7 +46,6 @@ namespace ZenithEngine.ModuleUI
                         obj.Add(vk.Key, vk.Value);
                 }
             }
-
             return obj;
         }
     }
@@ -54,9 +53,7 @@ namespace ZenithEngine.ModuleUI
     public class BaseContainer<C> : BaseContainerBasic<C>
         where C : Panel
     {
-        public BaseContainer(C control) : base(control)
-        { }
-
+        public BaseContainer(C control) : base(control) { }
         public Brush Background { get => Control.Background; set => Control.Background = value; }
     }
 }
