@@ -17,7 +17,7 @@ namespace ZenithEngine.MIDI.Disk
         public long TicksParsed { get; internal set; }
         public double SecondsParsed { get; internal set; }
 
-        DiskMidiFile midi;
+        readonly DiskMidiFile midi;
         public override MidiFile Midi => midi;
         DiskMidiTrack[] tracks;
         public override IMidiPlaybackTrack[] Tracks => tracks;
@@ -83,7 +83,7 @@ namespace ZenithEngine.MIDI.Disk
                         {
                             for (int i = 0; i < tracks.Length; i++)
                             {
-                                var track = trackPtr[i];
+                                DiskMidiTrack track = trackPtr[i];
                                 if (!track.Ended)
                                 {
                                     activeTracks++;
@@ -103,9 +103,9 @@ namespace ZenithEngine.MIDI.Disk
                 {
                     fixed (DiskMidiTrack* trackPtr = &tracks[0])
                     {
-                        foreach (var track in tracks) // Check if any tracks are still active
+                        for (int i = 0; i < tracks.Length; i++)
                         {
-                            if (!track.Ended)
+                            if (!trackPtr[i].Ended)
                             {
                                 return true;
                             }

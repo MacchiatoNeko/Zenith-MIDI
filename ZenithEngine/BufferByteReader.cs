@@ -23,20 +23,20 @@ namespace ZenithEngine
 
         public BufferByteReader(DiskReadProvider stream, int buffersize, long streamstart, long streamlen)
         {
-            this.streamLen = streamlen;
+            streamLen = streamlen;
             this.stream = stream;
-            this.streamStart = streamstart;
+            streamStart = streamstart;
             if (buffersize > streamlen)
             {
                 isSingle = true;
                 buffersize = (int)streamlen;
-                this.bufferSize = buffersize;
+                bufferSize = buffersize;
                 buffer = new byte[buffersize];
                 UpdateBufferSingle();
             }
             else
             {
-                this.bufferSize = buffersize;
+                bufferSize = buffersize;
                 buffer = new byte[buffersize];
                 bufferNext = new byte[buffersize];
                 UpdateBuffer(pos, true);
@@ -54,7 +54,9 @@ namespace ZenithEngine
         void UpdateBuffer(long pos, bool first = false)
         {
             if (isSingle)
+            {
                 throw new Exception("Cant update a buffer thats marked as single");
+            }
             if (first)
             {
                 if (sentRequest)
@@ -127,7 +129,7 @@ namespace ZenithEngine
         public void ResetAndResize(int buffersize)
         {
             if (buffersize > streamLen) buffersize = (int)streamLen;
-            this.bufferSize = buffersize;
+            bufferSize = buffersize;
             buffer = new byte[buffersize];
             bufferNext = new byte[buffersize];
             Reset();
