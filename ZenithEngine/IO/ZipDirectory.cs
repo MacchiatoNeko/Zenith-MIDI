@@ -247,7 +247,7 @@ namespace ZenithEngine.IO
 
     class ZrpDirectory : ZipDirectory
     {
-        static Stream DecodeZrp(Stream encoded) // TODO: Use MemoryStream
+        static Stream DecodeZrp(MemoryStream encoded)
         {
             var key = new byte[16];
             var iv = new byte[16];
@@ -256,6 +256,7 @@ namespace ZenithEngine.IO
 
             var zrpstream = new MemoryStream();
 
+#pragma warning disable SYSLIB0021 // Type or member is obsolete
             using (AesManaged aes = new())
             {
                 ICryptoTransform decryptor = aes.CreateDecryptor(key, iv);
@@ -265,6 +266,7 @@ namespace ZenithEngine.IO
                 }
                 zrpstream.Position = 0;
             }
+#pragma warning restore SYSLIB0021 // Type or member is obsolete
             return zrpstream;
         }
 
@@ -272,7 +274,7 @@ namespace ZenithEngine.IO
             : this(new BufferedStream(File.Open(filename, FileMode.Open, FileAccess.Read)))
         { }
 
-        public ZrpDirectory(Stream stream) : base(DecodeZrp(stream), DirectoryType.Zip)
+        public ZrpDirectory(Stream stream) : base(DecodeZrp((MemoryStream)stream), DirectoryType.Zip)
         { }
     }
 }
