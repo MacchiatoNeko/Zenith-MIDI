@@ -88,7 +88,8 @@ namespace ZenithEngine
         }
 
         Func<T, double> getTime;
-        IEnumerable<T> t1, t2;
+        private readonly IEnumerable<T> t1;
+        private readonly IEnumerable<T> t2;
 
         public ZipMerger(IEnumerable<T> t1, IEnumerable<T> t2, Func<T, double> getTime)
         {

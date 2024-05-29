@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace ZenithEngine
@@ -162,6 +163,7 @@ namespace ZenithEngine
         }
     }
 
+    [StructLayout(LayoutKind.Sequential)]
     public struct ReadDiskRequest
     {
         public long from;

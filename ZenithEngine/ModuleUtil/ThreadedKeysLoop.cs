@@ -139,7 +139,7 @@ namespace ZenithEngine.ModuleUtil
             PickStreams(RenderKeyArray, firstKey, lastKey, blackKeysOnTop);
         }
 
-        void PickStreams(Action<IEnumerable<int>> render, int firstKey, int lastKey, bool blackKeysOnTop)
+        static void PickStreams(Action<IEnumerable<int>> render, int firstKey, int lastKey, bool blackKeysOnTop)
         {
             IEnumerable<int> iterateAllKeys()
             {
