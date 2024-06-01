@@ -60,8 +60,8 @@ namespace Zenith
         abstract class CompositeBase : DeviceInitiable, IPreview
         {
             protected RenderPipeline pipeline;
-            protected Initiator init = new Initiator();
-            protected DisposeGroup disposer = new DisposeGroup();
+            protected new Initiator init = new();
+            protected DisposeGroup disposer = new();
 
             Textured2dShapeBuffer buffer;
 

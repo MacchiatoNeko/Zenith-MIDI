@@ -44,25 +44,18 @@ namespace TexturedRender
 
         private void Data_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            try
+            if (e.PropertyName == nameof(Data.SelectedPack))
             {
-                if (e.PropertyName == nameof(Data.SelectedPack))
+                Data.LoadedPack?.Unload();
+                if (Data.SelectedPack != null)
                 {
-                    Data.LoadedPack?.Unload();
-                    if (Data.SelectedPack != null)
-                    {
-                        var name = Data.SelectedPack.Filename;
-                        Data.LoadedPack = new LoadedPack(name, Data.SelectedPack);
-                    }
-                    else
-                    {
-                        Data.LoadedPack = null;
-                    }
+                    var name = Data.SelectedPack.Filename;
+                    Data.LoadedPack = new LoadedPack(name, Data.SelectedPack);
                 }
-            }
-            catch (Exception err)
-            {
-
+                else
+                {
+                    Data.LoadedPack = null;
+                }
             }
         }
 

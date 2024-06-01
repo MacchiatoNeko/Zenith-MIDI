@@ -7,7 +7,7 @@ namespace Zenith
     class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        static void Main() //string[] args
         {
             Console.Title = ("Zenith " + InstallSettings.VersionName + " Alpha-state");
             Console.WriteLine("Current runtime -> " + RuntimeInformation.FrameworkDescription);

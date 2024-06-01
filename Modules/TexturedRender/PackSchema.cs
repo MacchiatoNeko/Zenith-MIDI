@@ -97,7 +97,7 @@ namespace TexturedRender
                     using (var s = folder.OpenStream(Path.Combine(folderBasePath, path)))
                         return new Bitmap(s);
                 }
-                catch (IOException e)
+                catch (IOException)
                 {
                     throw new OpenerException($"Could not find file {path}");
                 }

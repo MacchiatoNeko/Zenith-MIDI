@@ -13,11 +13,7 @@ namespace ZenithEngine.ModuleUtil
         where T : struct
     {
         public DeviceContext Context { get; private set; } = null;
-
         BlockingCollection<T[]> arrays;
-
-        int pos = 0;
-
         int threads;
 
         public ThreadedKeysLoop(int length, PrimitiveTopology topology, ShapePresets indicesType) : this(length, topology, IndicesFromPreset(indicesType)) { }
@@ -25,7 +21,7 @@ namespace ZenithEngine.ModuleUtil
         public ThreadedKeysLoop(int length, PrimitiveTopology topology) : this(length, topology, null) { }
         public ThreadedKeysLoop(int length, PrimitiveTopology topology, int[] indices) : base(length, topology, indices)
         {
-            this.threads = Environment.ProcessorCount;
+            threads = Environment.ProcessorCount;
             if (threads > 8) threads = 8;
         }
 
