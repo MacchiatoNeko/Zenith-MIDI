@@ -280,7 +280,6 @@ namespace Zenith
 
         ModuleManager ModuleRunner { get; } = new ModuleManager();
         InstanceSettings Instance { get; } = new InstanceSettings();
-        InstallSettings InstallSettings { get; } = new InstallSettings();
         RenderStatus CurrentRenderStatus { get; set; } = null;
 
         public void LoadMidi(string path)
@@ -329,7 +328,6 @@ namespace Zenith
             SetCustomFFMPEGOptions();
 
             pluginsList.ItemsSource = RenderModules;
-            windowTabs.VersionName = InstallSettings.VersionName;
 
             SourceInitialized += (s, e) =>
             {

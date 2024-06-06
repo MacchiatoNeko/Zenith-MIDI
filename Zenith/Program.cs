@@ -9,7 +9,6 @@ namespace Zenith
         [STAThread]
         static void Main() //string[] args
         {
-            Console.Title = ("Zenith " + InstallSettings.VersionName + " Alpha-state");
             Console.WriteLine("Current runtime -> " + RuntimeInformation.FrameworkDescription);
             Application app = new();
             var window = new ZenithWindow();
@@ -25,7 +24,7 @@ namespace Zenith
             //        window.StartPipeline(false);
             //    }
             //};
-            //ZenithEngine.GCMonitor.Monitor _ = new();
+            ZenithEngine.GCMonitor.Monitor _ = new();
             app.Run(window);
         }
     }
