@@ -146,41 +146,26 @@ namespace ZenithEngine.MIDI.Audio
 
         public static T ExecuteWithDllProtection<T>(Func<T> func) // Slow?
         {
-            if (CanImportDll())
+            try
             {
-                try
-                {
-                    return func();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                    return default;
-                }
+                return func();
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("DLL not found. Please ensure the OmniMIDI DLL is present.");
+                Console.WriteLine($"An error occurred: {ex.Message}");
                 return default;
             }
         }
 
         public static void ExecuteWithDllProtection(Action action) // Slow?
         {
-            if (CanImportDll())
+            try
             {
-                try
-                {
-                    action();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                }
+                action();
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("KDMAPI not found. Please ensure the OmniMIDI is installed and registered.");
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
     }
