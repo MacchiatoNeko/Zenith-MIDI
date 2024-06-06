@@ -166,10 +166,6 @@ namespace ZenithEngine.DXHelper
                 Console.WriteLine(Device.DeviceRemovedReason);
                 throw;
             }
-            catch (NullReferenceException)
-            {
-                return;
-            }
             CheckResize();
         }
     }
