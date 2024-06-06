@@ -5,11 +5,6 @@ using System.Threading.Tasks;
 
 namespace ZenithEngine.MIDI.Audio
 {
-    public interface IMidiOutput : IDisposable
-    {
-        void SendEvent(uint e);
-        void Reset();
-    }
 
     public class MIDIAudio : IDisposable
     {
