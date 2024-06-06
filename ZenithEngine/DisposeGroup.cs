@@ -11,7 +11,7 @@ namespace ZenithEngine
 
         public void Dispose()
         {
-            if (disposed) 
+            if (disposed)
             {
                 return;
             }
@@ -24,7 +24,7 @@ namespace ZenithEngine
 
         public T Add<T>(T item) where T : IDisposable
         {
-            if (disposed) 
+            if (disposed)
             {
                 throw new Exception("Can't add items to a disposed DisposeGroup");
             }
@@ -34,13 +34,13 @@ namespace ZenithEngine
 
         public T Replace<T>(T prevItem, T newItem) where T : IDisposable
         {
-            if (disposed) 
+            if (disposed)
             {
                 throw new Exception("Can't add items to a disposed DisposeGroup");
             }
             if (prevItem != null)
             {
-                if (!items.Contains(prevItem)) 
+                if (!items.Contains(prevItem))
                 {
                     throw new ArgumentException("Previous item not found in items array");
                 }
@@ -61,7 +61,7 @@ namespace ZenithEngine
         {
             if (item != null)
             {
-                if (!items.Contains(item)) 
+                if (!items.Contains(item))
                 {
                     throw new ArgumentException("Item not found in items array");
                 }

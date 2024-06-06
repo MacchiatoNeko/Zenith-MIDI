@@ -1,26 +1,26 @@
-﻿using ZenithEngine;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Path = System.IO.Path;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Interop;
-using ZenithEngine.Modules;
+using ZenithEngine;
 using ZenithEngine.MIDI;
-using ZenithEngine.MIDI.Disk;
-using System.Collections.ObjectModel;
-using ZenithEngine.UI;
-using System.Globalization;
 using ZenithEngine.MIDI.Audio;
+using ZenithEngine.MIDI.Disk;
+using ZenithEngine.Modules;
+using ZenithEngine.UI;
+using Path = System.IO.Path;
 
 namespace Zenith
 {

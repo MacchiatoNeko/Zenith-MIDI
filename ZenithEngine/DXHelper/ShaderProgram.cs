@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Windows.Media;
 using Buffer = SharpDX.Direct3D11.Buffer;
 
 namespace ZenithEngine.DXHelper

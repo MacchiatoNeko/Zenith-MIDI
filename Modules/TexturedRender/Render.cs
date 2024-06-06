@@ -3,7 +3,6 @@ using SharpDX.Direct3D11;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using System.Windows.Media;
 using ZenithEngine;
 using ZenithEngine.DXHelper;
