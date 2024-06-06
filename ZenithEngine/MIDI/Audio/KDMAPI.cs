@@ -144,7 +144,7 @@ namespace ZenithEngine.MIDI.Audio
         [DllImport(DllName, SetLastError = true)]
         public static extern DebugInfo GetDriverDebugInfo();
 
-        public static T ExecuteWithDllProtection<T>(Func<T> func)
+        public static T ExecuteWithDllProtection<T>(Func<T> func) // Slow?
         {
             if (CanImportDll())
             {
@@ -165,7 +165,7 @@ namespace ZenithEngine.MIDI.Audio
             }
         }
 
-        public static void ExecuteWithDllProtection(Action action)
+        public static void ExecuteWithDllProtection(Action action) // Slow?
         {
             if (CanImportDll())
             {
